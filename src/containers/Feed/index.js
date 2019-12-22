@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { sampleAction } from "../../Redux/actions/sampleAction";
+import { sampleButtonClick } from "../../Redux/modules/sample";
 
 import Thumbnail from "../../components/Thumbnail";
 import "./feed.scss";
@@ -11,17 +11,13 @@ import "./feed.scss";
 class Feed extends Component {
     componentDidMount() {}
 
-    simpleAction = event => {
-        this.props.simpleAction();
-    };
-
     render() {
         return (
             <section>
                 <Thumbnail />
-                <button onClick={this.simpleAction}>Test redux action</button>
+                <button onClick={this.props.sampleButtonClick}>Test redux action</button>
 
-                <pre>{JSON.stringify(this.props.simpleReducer)}</pre>
+                <pre>{JSON.stringify(this.props.sampleModule)}</pre>
             </section>
         );
     }
@@ -32,7 +28,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(sampleAction())
+    sampleButtonClick: () => dispatch(sampleButtonClick())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);
