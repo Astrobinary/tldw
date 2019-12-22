@@ -1,4 +1,4 @@
-const SAMPLE_CLICK = "tldw/sample/SAMPLE_CLICK";
+const SAMPLE_CLICK = "sample/SAMPLE_CLICK";
 
 const initialState = {
     sample: ""
