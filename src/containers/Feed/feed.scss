@@ -1,7 +1,14 @@
 @import "../../variables.scss";
 
 .Feed {
-    div {
-        color: $blue;
-    }
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+    grid-gap: 10px;
+    grid-auto-flow: dense;
+    justify-items: center;
+    grid-row-gap: 20px;
+    overflow: hidden;
+    padding: 20px 5px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.4) 200%, black 100%);
+    transition: all 0.2s ease;
 }
