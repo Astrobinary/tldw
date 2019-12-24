@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 
 import { sampleButtonClick } from "../../redux/modules/sample";
 
@@ -12,18 +14,70 @@ class Feed extends Component {
     render() {
         return (
             <section className="Feed">
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
-                {/* <button onClick={this.props.sampleButtonClick}>Test redux action</button> */}
+                <section className="daily-videos">
+                    <div className="section-title first">
+                        sponsored <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
+                    </div>
+                    <div className="thumbnail-contain sponsor">
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                    </div>
+                </section>
+
+                <section className="daily-videos">
+                    <div className="section-title">most viewed</div>
+                    <div className="thumbnail-contain">
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                    </div>
+                </section>
+
+                <section className="daily-videos">
+                    <div className="section-title">trending</div>
+                    <div className="thumbnail-contain">
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                    </div>
+                </section>
+
+                <section className="daily-videos">
+                    <div className="section-title">most talked about</div>
+                    <div className="thumbnail-contain">
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                    </div>
+                </section>
             </section>
         );
     }

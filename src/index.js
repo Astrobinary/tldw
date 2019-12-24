@@ -24,7 +24,7 @@ const isIE = () => {
 
 let Index;
 if (isIE()) {
-    //TODO: Create an browser upgrade landing page.
+    //TODO: Create an browser landing page.
     Index = () => <div>You need to upgrade your shit bruh.</div>;
 } else {
     Index = () => (
