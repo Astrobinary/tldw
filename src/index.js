@@ -10,6 +10,9 @@ import "./global.scss";
 
 //Containers
 import Feed from "./containers/Feed";
+import Streamers from "./containers/Streamers";
+import Games from "./containers/Games";
+import Playlists from "./containers/Playlists";
 
 //Components
 import Navbar from "./components/Navbar";
@@ -34,6 +37,9 @@ if (isIE()) {
                 <Switch>
                     <Redirect from="/" exact to="/feed" />
                     <Route exact path="/feed" component={Feed} />
+                    <Route exact path="/streamers" component={Streamers} />
+                    <Route exact path="/games" component={Games} />
+                    <Route exact path="/playlists" component={Playlists} />
                 </Switch>
             </ConnectedRouter>
         </Provider>

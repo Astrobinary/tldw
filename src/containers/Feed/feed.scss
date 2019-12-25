@@ -1,7 +1,6 @@
 @import "../../variables.scss";
 
 .Feed {
-    margin-top: -140px;
     .daily-videos {
         .section-title {
             width: calc(100% - 20px);
@@ -28,9 +27,6 @@
             }
         }
 
-        .first {
-            padding-top: 20px;
-        }
         .thumbnail-contain {
             display: grid;
             padding-top: 20px;
