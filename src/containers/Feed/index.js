@@ -16,7 +16,8 @@ class Feed extends Component {
             <section className="Feed">
                 <section className="daily-videos">
                     <div className="section-title">
-                        sponsored <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
+                        sponsored clips
+                        <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
                     </div>
                     <div className="thumbnail-contain sponsor">
                         <Thumbnail />
