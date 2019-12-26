@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import { sampleButtonClick } from "../../redux/modules/sample";
-
 import "./games.scss";
+
+//Dev
+import gameBox from "./sample_game.jpg";
+
+//Actions
+import { sampleButtonClick } from "../../redux/modules/sample";
 
 class Games extends Component {
     componentDidMount() {}
@@ -11,7 +14,183 @@ class Games extends Component {
     render() {
         return (
             <section className="Games">
-                <div>Games</div>
+                <div className="section-title">most popular</div>
+                <section className="game-container">
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                </section>
+
+                <div className="section-title">followed</div>
+                <section className="game-container">
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                    <div className="game">
+                        <img src={gameBox} alt="game" />
+                    </div>
+                </section>
             </section>
         );
     }
