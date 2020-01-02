@@ -92,4 +92,7 @@ const mapDispatchToProps = dispatch => ({
     sampleButtonClick: () => dispatch(sampleButtonClick())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Feed);

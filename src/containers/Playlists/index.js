@@ -11,7 +11,8 @@ class Playlists extends Component {
     render() {
         return (
             <section className="Playlists">
-                <div>Playlists</div>
+                <div className="section-title">most popular</div>
+                <section className="playlist-container"></section>
             </section>
         );
     }
@@ -25,4 +26,7 @@ const mapDispatchToProps = dispatch => ({
     sampleButtonClick: () => dispatch(sampleButtonClick())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Playlists);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Playlists);
