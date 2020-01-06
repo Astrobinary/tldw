@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 
-import { sampleButtonClick } from "../../redux/modules/sample";
+import { initialFetch } from "../../redux/modules/feed";
 
 import Thumbnail from "../../components/Thumbnail";
 import "./feed.scss";
 
 class Feed extends Component {
-    componentDidMount() {}
+    componentDidMount() {
+        this.props.initialFetch();
+    }
 
     render() {
         return (
@@ -28,7 +30,6 @@ class Feed extends Component {
                         <Thumbnail />
                     </div>
                 </section>
-
                 <section className="daily-videos">
                     <div className="section-title">most viewed</div>
                     <div className="thumbnail-contain">
@@ -45,7 +46,6 @@ class Feed extends Component {
                         <Thumbnail />
                     </div>
                 </section>
-
                 <section className="daily-videos">
                     <div className="section-title">trending</div>
                     <div className="thumbnail-contain">
@@ -62,7 +62,6 @@ class Feed extends Component {
                         <Thumbnail />
                     </div>
                 </section>
-
                 <section className="daily-videos">
                     <div className="section-title">most talked about</div>
                     <div className="thumbnail-contain">
@@ -85,11 +84,11 @@ class Feed extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state
+    feed: state.feedModule
 });
 
 const mapDispatchToProps = dispatch => ({
-    sampleButtonClick: () => dispatch(sampleButtonClick())
+    initialFetch: () => dispatch(initialFetch())
 });
 
 export default connect(
