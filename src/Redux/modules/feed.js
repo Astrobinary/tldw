@@ -12,7 +12,7 @@ const initialTimes = {
     week: initialData,
     month: initialData,
     all: initialData,
-    currentTime: "day"
+    currentSort: "day"
 };
 
 const initialState = {

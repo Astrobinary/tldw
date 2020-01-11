@@ -6,6 +6,9 @@ import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import { initialFetch } from "../../redux/modules/feed";
 
 import Thumbnail from "../../components/Thumbnail";
+import SectionTitle from "../../components/SectionTitle";
+import ViewMoreBtn from "../../components/ViewMoreBtn";
+
 import "./feed.scss";
 
 class Feed extends Component {
@@ -13,11 +16,13 @@ class Feed extends Component {
         this.props.initialFetch();
     }
 
+    updateSort = () => {};
+
     render() {
         return (
             <section className="Feed">
-                <section className="daily-videos">
-                    <div className="section-title">
+                <section className="feed-videos">
+                    <div className="section-title first-section-title">
                         sponsored clips
                         <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
                     </div>
@@ -30,8 +35,9 @@ class Feed extends Component {
                         <Thumbnail />
                     </div>
                 </section>
-                <section className="daily-videos">
-                    <div className="section-title">most viewed</div>
+
+                <section className="feed-videos">
+                    <SectionTitle text="most viewed" updateSortFunc={this.updateSort} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -44,10 +50,27 @@ class Feed extends Component {
                         <Thumbnail />
                         <Thumbnail />
                         <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
                     </div>
+                    <ViewMoreBtn text="view more popular" />
                 </section>
-                <section className="daily-videos">
-                    <div className="section-title">trending</div>
+
+                <section className="feed-videos">
+                    <SectionTitle text="trending" updateSortFunc={this.updateSort} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -60,10 +83,39 @@ class Feed extends Component {
                         <Thumbnail />
                         <Thumbnail />
                         <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
                     </div>
+                    <ViewMoreBtn text="view more trending" />
                 </section>
-                <section className="daily-videos">
-                    <div className="section-title">most talked about</div>
+
+                <section className="feed-videos">
+                    <SectionTitle text="most talked about" updateSortFunc={this.updateSort} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -76,7 +128,30 @@ class Feed extends Component {
                         <Thumbnail />
                         <Thumbnail />
                         <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
+                        <Thumbnail />
                     </div>
+                    <ViewMoreBtn text="read more drama" />
                 </section>
             </section>
         );
@@ -91,7 +166,4 @@ const mapDispatchToProps = dispatch => ({
     initialFetch: () => dispatch(initialFetch())
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

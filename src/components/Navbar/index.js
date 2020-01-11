@@ -10,7 +10,7 @@ const Navbar = () => (
     <nav className="Navbar">
         <section className="navbar-desktop">
             <Link className="nav-logo" to="/feed">
-                too long; didn't watch
+                TLDW
             </Link>
 
             <NavLink activeClassName="selected" className="nav-item" to="/feed">
