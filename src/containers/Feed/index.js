@@ -16,7 +16,9 @@ class Feed extends Component {
         this.props.initialFetch();
     }
 
-    updateSort = () => {};
+    fetchMoreVideos = () => {
+        console.log("Here i should fetch.");
+    };
 
     render() {
         return (
@@ -37,7 +39,7 @@ class Feed extends Component {
                 </section>
 
                 <section className="feed-videos">
-                    <SectionTitle text="most viewed" updateSortFunc={this.updateSort} />
+                    <SectionTitle text="most viewed" />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -66,7 +68,7 @@ class Feed extends Component {
                         <Thumbnail />
                         <Thumbnail />
                     </div>
-                    <ViewMoreBtn text="view more popular" />
+                    <ViewMoreBtn text="keep them coming" fetch={this.fetchMoreVideos} />
                 </section>
 
                 <section className="feed-videos">
@@ -111,11 +113,11 @@ class Feed extends Component {
                         <Thumbnail />
                         <Thumbnail />
                     </div>
-                    <ViewMoreBtn text="view more trending" />
+                    <ViewMoreBtn text="see what else is new" fetch={this.fetchMoreVideos} />
                 </section>
 
                 <section className="feed-videos">
-                    <SectionTitle text="most talked about" updateSortFunc={this.updateSort} />
+                    <SectionTitle text="most talked about" />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -151,7 +153,7 @@ class Feed extends Component {
                         <Thumbnail />
                         <Thumbnail />
                     </div>
-                    <ViewMoreBtn text="read more drama" />
+                    <ViewMoreBtn text="look for more drama" fetch={this.fetchMoreVideos} />
                 </section>
             </section>
         );

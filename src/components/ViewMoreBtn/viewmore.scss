@@ -21,3 +21,9 @@
         border-bottom: 1px solid $pink;
     }
 }
+
+//Will be used on a grid, not here
+.release {
+    grid-auto-rows: initial !important;
+    transition: all 0.3s ease;
+}
