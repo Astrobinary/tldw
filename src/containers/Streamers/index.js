@@ -6,7 +6,6 @@ import "./streamers.scss";
 import avatar from "./sample_streamer.png";
 
 //Actions
-import { sampleButtonClick } from "../../redux/modules/sample";
 
 class Streamers extends Component {
     componentDidMount() {}
@@ -360,8 +359,9 @@ const mapStateToProps = state => ({
     ...state
 });
 
-const mapDispatchToProps = dispatch => ({
-    sampleButtonClick: () => dispatch(sampleButtonClick())
-});
+const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Streamers);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Streamers);

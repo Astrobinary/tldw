@@ -43,6 +43,7 @@ class SectionTitle extends Component {
         this.setState({ showMenu: !this.state.showMenu });
     }
     updateMenu(newSort) {
+        this.props.fetch();
         this.setState({ currentSort: newSort });
         this.toggleMenu();
     }
@@ -73,4 +74,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionTitle);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SectionTitle);

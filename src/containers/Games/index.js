@@ -6,7 +6,6 @@ import "./games.scss";
 import gameBox from "./sample_game.jpg";
 
 //Actions
-import { sampleButtonClick } from "../../redux/modules/sample";
 
 class Games extends Component {
     componentDidMount() {}
@@ -200,8 +199,9 @@ const mapStateToProps = state => ({
     ...state
 });
 
-const mapDispatchToProps = dispatch => ({
-    sampleButtonClick: () => dispatch(sampleButtonClick())
-});
+const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Games);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Games);

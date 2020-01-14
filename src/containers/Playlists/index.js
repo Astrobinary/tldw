@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { sampleButtonClick } from "../../redux/modules/sample";
-
 import "./playlists.scss";
 
 class Playlists extends Component {
@@ -22,9 +20,7 @@ const mapStateToProps = state => ({
     ...state
 });
 
-const mapDispatchToProps = dispatch => ({
-    sampleButtonClick: () => dispatch(sampleButtonClick())
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
     mapStateToProps,
