@@ -20,6 +20,10 @@ class Feed extends Component {
         console.log("Here i should fetch.");
     };
 
+    updateSort = () => {
+        console.log("changing sort... fetch new");
+    };
+
     render() {
         return (
             <section className="Feed">
@@ -39,7 +43,7 @@ class Feed extends Component {
                 </section>
 
                 <section className="feed-videos">
-                    <SectionTitle text="most viewed" />
+                    <SectionTitle text="most viewed" updateSortFunc={this.updateSort} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -117,7 +121,7 @@ class Feed extends Component {
                 </section>
 
                 <section className="feed-videos">
-                    <SectionTitle text="most talked about" />
+                    <SectionTitle text="most talked about" updateSortFunc={this.updateSort} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -168,4 +172,7 @@ const mapDispatchToProps = dispatch => ({
     initialFetch: () => dispatch(initialFetch())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Feed);

@@ -39,14 +39,14 @@ class SectionTitle extends Component {
         };
     }
 
-    toggleMenu() {
+    toggleMenu = () => {
         this.setState({ showMenu: !this.state.showMenu });
-    }
-    updateMenu(newSort) {
-        this.props.fetch();
+    };
+    updateMenu = newSort => {
+        this.props.updateSortFunc();
         this.setState({ currentSort: newSort });
         this.toggleMenu();
-    }
+    };
 
     render() {
         const filterSort = this.state.list.filter(item => item.id !== this.state.currentSort.id);
