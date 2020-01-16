@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 
-import { initialFetch } from "../../redux/modules/feed";
+import { initialFetch, updateViewSorting, updateTalkSorting } from "../../redux/modules/feed";
 
 import Thumbnail from "../../components/Thumbnail";
 import SectionTitle from "../../components/SectionTitle";
@@ -20,8 +20,11 @@ class Feed extends Component {
         console.log("Here i should fetch.");
     };
 
-    updateSort = () => {
-        console.log("changing sort... fetch new");
+    // Called from section title component
+    updateSorting = (from, newSort) => {
+        if (from === "mostViewed") this.props.updateViewSorting(newSort);
+        if (from === "mostTalked") this.props.updateTalkSorting(newSort);
+        console.log(`${from} is changing sort to ${newSort}`);
     };
 
     render() {
@@ -43,7 +46,7 @@ class Feed extends Component {
                 </section>
 
                 <section className="feed-videos">
-                    <SectionTitle text="most viewed" updateSortFunc={this.updateSort} />
+                    <SectionTitle text="most viewed" haveSort={true} from="mostViewed" updateSortFunc={this.updateSorting} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -75,8 +78,12 @@ class Feed extends Component {
                     <ViewMoreBtn text="keep them coming" fetch={this.fetchMoreVideos} />
                 </section>
 
+                <section className="ad-container">
+                    <div className="ad">sample ad 970x90</div>
+                </section>
+
                 <section className="feed-videos">
-                    <SectionTitle text="trending" updateSortFunc={this.updateSort} />
+                    <SectionTitle text="newly trending" from="trending" haveSort={false} updateSortFunc={this.updateSorting} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -121,7 +128,7 @@ class Feed extends Component {
                 </section>
 
                 <section className="feed-videos">
-                    <SectionTitle text="most talked about" updateSortFunc={this.updateSort} />
+                    <SectionTitle text="most talked about" haveSort={true} from="mostTalked" updateSortFunc={this.updateSorting} />
                     <div className="thumbnail-contain">
                         <Thumbnail />
                         <Thumbnail />
@@ -159,6 +166,10 @@ class Feed extends Component {
                     </div>
                     <ViewMoreBtn text="look for more drama" fetch={this.fetchMoreVideos} />
                 </section>
+
+                <section className="ad-container">
+                    <div className="ad">sample ad 728x90</div>
+                </section>
             </section>
         );
     }
@@ -169,7 +180,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    initialFetch: () => dispatch(initialFetch())
+    initialFetch: () => dispatch(initialFetch()),
+    updateViewSorting: sort => dispatch(updateViewSorting(sort)),
+    updateTalkSorting: sort => dispatch(updateTalkSorting(sort))
 });
 
 export default connect(

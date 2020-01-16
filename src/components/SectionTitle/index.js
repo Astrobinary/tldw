@@ -42,13 +42,16 @@ class SectionTitle extends Component {
     toggleMenu = () => {
         this.setState({ showMenu: !this.state.showMenu });
     };
+
     updateMenu = newSort => {
-        this.props.updateSortFunc();
+        this.props.updateSortFunc(this.props.from, newSort.key);
         this.setState({ currentSort: newSort });
         this.toggleMenu();
     };
 
     render() {
+        if (!this.props.haveSort) return <div className="section-title">{this.props.text}</div>;
+
         const filterSort = this.state.list.filter(item => item.id !== this.state.currentSort.id);
         const mappedSort = filterSort.map(item => (
             <span key={item.id} onClick={() => this.updateMenu(item)} className="sort-item">
