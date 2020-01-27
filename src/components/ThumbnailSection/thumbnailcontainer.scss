@@ -1,0 +1,19 @@
+.ThumbnailSection {
+        .thumbnail-contain {
+            margin-top: 10px;
+            display: grid;
+            grid-auto-rows: 0;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-rows: repeat(2, 1fr);
+            justify-items: center;
+            overflow-y: hidden;
+            padding: 0 10px;
+            padding-top: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.5) 200%, black 100%);
+            transition: all 0.3s ease;
+        }
+
+        .sponsor {
+            grid-template-rows: repeat(1, 1fr);
+        }
+    }

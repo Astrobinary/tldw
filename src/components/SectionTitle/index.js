@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+
+import Sponsor from "../Sponsor";
 
 import "./sectiontitle.scss";
 
@@ -50,9 +51,15 @@ class SectionTitle extends Component {
     };
 
     render() {
-        if (!this.props.haveSort) return <div className="section-title">{this.props.text}</div>;
+        if (!this.props.haveSort)
+            return (
+                <div className="section-title">
+                    {this.props.titleText} {this.props.from === "sponsored" ? <Sponsor /> : null}
+                </div>
+            );
 
         const filterSort = this.state.list.filter(item => item.id !== this.state.currentSort.id);
+
         const mappedSort = filterSort.map(item => (
             <span key={item.id} onClick={() => this.updateMenu(item)} className="sort-item">
                 {item.key}
@@ -60,24 +67,15 @@ class SectionTitle extends Component {
         ));
 
         return (
-            <React.Fragment>
-                <div className="section-title">
-                    {this.props.text}
-                    <span className="current-item" onClick={() => this.toggleMenu()}>
-                        {this.state.currentSort.text}
-                    </span>
-                    {this.state.showMenu ? mappedSort : null}
-                </div>
-            </React.Fragment>
+            <div className="section-title">
+                {this.props.titleText}
+                <span className="current-item" onClick={() => this.toggleMenu()}>
+                    {this.state.currentSort.text} {this.props.from === "sponsored" ? <Sponsor /> : null}
+                </span>
+                {this.state.showMenu ? mappedSort : null}
+            </div>
         );
     }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SectionTitle);
+export default SectionTitle;

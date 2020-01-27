@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./thumbnail.scss";
 
@@ -26,5 +27,10 @@ const Thumbnail = props => (
         <div className="title">Random video title goes here.</div>
     </div>
 );
+
+Thumbnail.propTypes = {
+    thumbnail: PropTypes.string,
+    avatar: PropTypes.string
+};
 
 export default Thumbnail;

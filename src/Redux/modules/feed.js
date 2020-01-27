@@ -1,29 +1,10 @@
 /* ACTION TYPES */
-const INITIAL_FETCH = "feed/INIT_FETCH";
+const INITIAL_FETCH_REQUEST = "feed/INIT_FETCH_REQUEST";
+const INITIAL_FETCH_SUCCESS = "feed/INIT_FETCH_SUCCESS";
+const INITIAL_FETCH_FAIL = "feed/INIT_FETCH_FAIL";
+
 const UPDATE_VIEW_SORTING = "feed/UPDATE_VIEWED_SORTING";
 const UPDATE_TALK_SORTING = "feed/UPDATE_TALKED_SORTING";
-
-/* ACTION CREATORS */
-export function initialFetch() {
-    return {
-        type: INITIAL_FETCH,
-        payload: "what is this"
-    };
-}
-
-export function updateViewSorting(newSort) {
-    return {
-        type: UPDATE_VIEW_SORTING,
-        newSort
-    };
-}
-
-export function updateTalkSorting(newSort) {
-    return {
-        type: UPDATE_TALK_SORTING,
-        newSort
-    };
-}
 
 /* INITIAL DATA */
 const initialData = {
@@ -46,21 +27,61 @@ const initialState = {
     mostViewed: initialTimes,
     trending: initialTimes,
     mostTalked: initialTimes,
-    language: ""
+    initialFetch: false
 };
+
+/* INITIAL FETCH ACTIONS */
+export function _initialFetchRequest() {
+    return {
+        type: INITIAL_FETCH_REQUEST
+    };
+}
+export function _initialFetchSuccess() {
+    return {
+        type: INITIAL_FETCH_SUCCESS
+    };
+}
+
+export function _initialFetchFail(error) {
+    return {
+        type: INITIAL_FETCH_FAIL,
+        error
+    };
+}
+
+/* UPDATE SORT ACTIONS */
+export function _updateViewSorting(newSort) {
+    return {
+        type: UPDATE_VIEW_SORTING,
+        newSort
+    };
+}
+
+export function _updateTalkSorting(newSort) {
+    return {
+        type: UPDATE_TALK_SORTING,
+        newSort
+    };
+}
 
 /* REDUCER */
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case INITIAL_FETCH:
-            return Object.assign({}, state, { videos: action.payload });
+        case INITIAL_FETCH_REQUEST:
+            return { ...state };
+
+        case INITIAL_FETCH_SUCCESS:
+            return Object.assign({}, state, { initialFetch: true });
+
+        case INITIAL_FETCH_FAIL:
+            return Object.assign({}, state, {});
         case UPDATE_VIEW_SORTING:
             return Object.assign({}, state, {
                 mostViewed: { ...state.mostViewed, currentSort: action.newSort }
             });
         case UPDATE_TALK_SORTING:
             return Object.assign({}, state, {
-                mostTalked: { ...state.mostViewed, currentSort: action.newSort }
+                mostTalked: { ...state.mostTalked, currentSort: action.newSort }
             });
         default:
             return state;
@@ -68,11 +89,17 @@ export default function reducer(state = initialState, action) {
 }
 
 /* SIDE EFFECTS */
-function shouldFetchVideos(state, type) {
-    const videos = state[type];
+
+export const startInitalFetch = state => dispatch => {
+    dispatch(_initialFetchRequest());
+    dispatch(_initialFetchSuccess());
+};
+
+export function shouldFetchVideos(state, type, sort) {
+    const videos = state[type].sort.videos;
     if (!videos) {
         return true;
-    } else if (state.isFetching) {
+    } else if (state[type].sort.isFetching) {
         return false;
     }
 }

@@ -1,191 +1,57 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 
-import { initialFetch, updateViewSorting, updateTalkSorting } from "../../redux/modules/feed";
+import { startInitalFetch, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
 
-import Thumbnail from "../../components/Thumbnail";
-import SectionTitle from "../../components/SectionTitle";
-import ViewMoreBtn from "../../components/ViewMoreBtn";
+import ThumbnailSection from "../../components/ThumbnailSection";
+import Ad from "../../components/Ad";
 
 import "./feed.scss";
 
 class Feed extends Component {
     componentDidMount() {
-        this.props.initialFetch();
+        if (!this.props.initialFetch) this.props.startInitalFetch();
     }
 
-    fetchMoreVideos = () => {
-        console.log("Here i should fetch.");
+    fetchMoreVideos = section => {
+        console.log(`Fetching more ${section} for ${this.props[section].currentSort}`);
     };
 
-    // Called from section title component
     updateSorting = (from, newSort) => {
         if (from === "mostViewed") this.props.updateViewSorting(newSort);
         if (from === "mostTalked") this.props.updateTalkSorting(newSort);
+
         console.log(`${from} is changing sort to ${newSort}`);
     };
 
     render() {
+        // const sponsorInfo = <Sponsor>;
+
         return (
             <section className="Feed">
-                <section className="feed-videos">
-                    <div className="section-title first-section-title">
-                        sponsored clips
-                        <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
-                    </div>
-                    <div className="thumbnail-contain sponsor">
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                    </div>
-                </section>
-
-                <section className="feed-videos">
-                    <SectionTitle text="most viewed" haveSort={true} from="mostViewed" updateSortFunc={this.updateSorting} />
-                    <div className="thumbnail-contain">
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                    </div>
-                    <ViewMoreBtn text="keep them coming" fetch={this.fetchMoreVideos} />
-                </section>
-
-                <section className="ad-container">
-                    <div className="ad">sample ad 970x90</div>
-                </section>
-
-                <section className="feed-videos">
-                    <SectionTitle text="newly trending" from="trending" haveSort={false} updateSortFunc={this.updateSorting} />
-                    <div className="thumbnail-contain">
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                    </div>
-                    <ViewMoreBtn text="see what else is new" fetch={this.fetchMoreVideos} />
-                </section>
-
-                <section className="feed-videos">
-                    <SectionTitle text="most talked about" haveSort={true} from="mostTalked" updateSortFunc={this.updateSorting} />
-                    <div className="thumbnail-contain">
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                        <Thumbnail />
-                    </div>
-                    <ViewMoreBtn text="look for more drama" fetch={this.fetchMoreVideos} />
-                </section>
-
-                <section className="ad-container">
-                    <div className="ad">sample ad 728x90</div>
-                </section>
+                <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
+                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
+                <Ad />
+                <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
+                <Ad />
+                <ThumbnailSection titleText="most talked about" from="mostTalked" btnText="look for more drama" haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
             </section>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    feed: state.feedModule
+    sponsored: state.feedModule.sponsored,
+    mostViewed: state.feedModule.mostViewed,
+    trending: state.feedModule.trending,
+    mostTalked: state.feedModule.mostTalked,
+    initialFetch: state.feedModule.initialFetch
 });
 
 const mapDispatchToProps = dispatch => ({
-    initialFetch: () => dispatch(initialFetch()),
-    updateViewSorting: sort => dispatch(updateViewSorting(sort)),
-    updateTalkSorting: sort => dispatch(updateTalkSorting(sort))
+    startInitalFetch: () => dispatch(startInitalFetch()),
+    updateViewSorting: sort => dispatch(_updateViewSorting(sort)),
+    updateTalkSorting: sort => dispatch(_updateTalkSorting(sort))
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

@@ -16,9 +16,11 @@ class ViewMoreBtn extends Component {
     };
 
     render() {
+        if(this.props.btnText === undefined) return null;
+
         return (
             <div className="View-More" onClick={this.updateCount}>
-                {this.props.text}
+                {this.props.btnText}
             </div>
         );
     }
