@@ -1,7 +1,11 @@
 /* ACTION TYPES */
-const INITIAL_FETCH_REQUEST = "feed/INIT_FETCH_REQUEST";
-const INITIAL_FETCH_SUCCESS = "feed/INIT_FETCH_SUCCESS";
-const INITIAL_FETCH_FAIL = "feed/INIT_FETCH_FAIL";
+const MOSTVIEWED_REQUEST = "feed/MOSTVIEWED_REQUEST";
+const MOSTVIEWED_SUCCESS = "feed/MOSTVIEWED_SUCCESS";
+const MOSTVIEWED_FAIL = "feed/MOSTVIEWED_FAIL";
+
+const TRENDING_REQUEST = "feed/TRENDING_REQUEST";
+const TRENDING_SUCCESS = "feed/TRENDING_SUCCESS";
+const TRENDING_FAIL = "feed/TRENDING_FAIL";
 
 const UPDATE_VIEW_SORTING = "feed/UPDATE_VIEWED_SORTING";
 const UPDATE_TALK_SORTING = "feed/UPDATE_TALKED_SORTING";
@@ -26,30 +30,54 @@ const initialState = {
     sponsored: initialTimes,
     mostViewed: initialTimes,
     trending: initialTimes,
-    mostTalked: initialTimes,
-    initialFetch: false
+    mostTalked: initialTimes
 };
 
-/* INITIAL FETCH ACTIONS */
-export function _initialFetchRequest() {
+/* MOST VIEWED ACTION CREATORS */
+export function _mostViewedRequest(timeSort) {
     return {
-        type: INITIAL_FETCH_REQUEST
+        type: MOSTVIEWED_REQUEST,
+        timeSort
     };
 }
-export function _initialFetchSuccess() {
+export function _mostViewedSuccess(timeSort, videos) {
     return {
-        type: INITIAL_FETCH_SUCCESS
+        type: MOSTVIEWED_SUCCESS,
+        timeSort,
+        videos
     };
 }
-
-export function _initialFetchFail(error) {
+export function _mostViewedFail(timeSort, error) {
     return {
-        type: INITIAL_FETCH_FAIL,
+        type: MOSTVIEWED_FAIL,
+        timeSort,
         error
     };
 }
 
-/* UPDATE SORT ACTIONS */
+/* TRENDING ACTION CREATORS */
+export function _trendingRequest(timeSort) {
+    return {
+        type: TRENDING_REQUEST,
+        timeSort
+    };
+}
+export function _trendingSuccess(timeSort, videos) {
+    return {
+        type: TRENDING_SUCCESS,
+        timeSort,
+        videos
+    };
+}
+export function _trendingFail(timeSort, error) {
+    return {
+        type: TRENDING_FAIL,
+        timeSort,
+        error
+    };
+}
+
+/* UPDATE SORT ACTION CREATORS */
 export function _updateViewSorting(newSort) {
     return {
         type: UPDATE_VIEW_SORTING,
@@ -64,17 +92,37 @@ export function _updateTalkSorting(newSort) {
     };
 }
 
-/* REDUCER */
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case INITIAL_FETCH_REQUEST:
-            return { ...state };
+        /* MOSTVIEWED */
+        case MOSTVIEWED_REQUEST:
+            return Object.assign({}, state, {
+                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: true } }
+            });
+        case MOSTVIEWED_SUCCESS:
+            return Object.assign({}, state, {
+                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, videos: action.videos } }
+            });
+        case MOSTVIEWED_FAIL:
+            return Object.assign({}, state, {
+                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, error: action.error } }
+            });
 
-        case INITIAL_FETCH_SUCCESS:
-            return Object.assign({}, state, { initialFetch: true });
+        /* TRENDING */
+        case TRENDING_REQUEST:
+            return Object.assign({}, state, {
+                trending: { ...state.trending, [action.timeSort]: { ...state.trending[action.timeSort], isFetching: true } }
+            });
+        case TRENDING_SUCCESS:
+            return Object.assign({}, state, {
+                trending: { ...state.trending, [action.timeSort]: { ...state.trending[action.timeSort], isFetching: false, videos: action.videos } }
+            });
+        case TRENDING_FAIL:
+            return Object.assign({}, state, {
+                trending: { ...state.trending, [action.timeSort]: { ...state.trending[action.timeSort], isFetching: false, error: action.error } }
+            });
 
-        case INITIAL_FETCH_FAIL:
-            return Object.assign({}, state, {});
+        /* UPDATE SORTING */
         case UPDATE_VIEW_SORTING:
             return Object.assign({}, state, {
                 mostViewed: { ...state.mostViewed, currentSort: action.newSort }
@@ -88,18 +136,16 @@ export default function reducer(state = initialState, action) {
     }
 }
 
-/* SIDE EFFECTS */
-
-export const startInitalFetch = state => dispatch => {
-    dispatch(_initialFetchRequest());
-    dispatch(_initialFetchSuccess());
+/* Most Viewed Section */
+export const fetchMostViewed = timeSort => dispatch => {
+    dispatch(_mostViewedRequest(timeSort));
+    dispatch(_mostViewedSuccess(timeSort, ["test video item"]));
 };
 
-export function shouldFetchVideos(state, type, sort) {
-    const videos = state[type].sort.videos;
-    if (!videos) {
-        return true;
-    } else if (state[type].sort.isFetching) {
-        return false;
-    }
-}
+/* Trending Section */
+export const fetchTrending = timeSort => dispatch => {
+    const error = "This is a test trending error.";
+
+    dispatch(_trendingRequest(timeSort));
+    dispatch(_trendingFail(timeSort, error));
+};

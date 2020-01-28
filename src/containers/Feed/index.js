@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { startInitalFetch, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
+import { fetchMostViewed, fetchTrending, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
 
 import ThumbnailSection from "../../components/ThumbnailSection";
 import Ad from "../../components/Ad";
@@ -10,7 +10,11 @@ import "./feed.scss";
 
 class Feed extends Component {
     componentDidMount() {
-        if (!this.props.initialFetch) this.props.startInitalFetch();
+        const mostViewed = this.props.mostViewed;
+        const trending = this.props.trending;
+
+        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day");
+        if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day");
     }
 
     fetchMoreVideos = section => {
@@ -25,8 +29,6 @@ class Feed extends Component {
     };
 
     render() {
-        // const sponsorInfo = <Sponsor>;
-
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
@@ -49,9 +51,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    startInitalFetch: () => dispatch(startInitalFetch()),
-    updateViewSorting: sort => dispatch(_updateViewSorting(sort)),
-    updateTalkSorting: sort => dispatch(_updateTalkSorting(sort))
+    fetchMostViewed: timeSort => dispatch(fetchMostViewed(timeSort)),
+    fetchTrending: timeSort => dispatch(fetchTrending(timeSort)),
+    updateViewSorting: newSort => dispatch(_updateViewSorting(newSort)),
+    updateTalkSorting: newSort => dispatch(_updateTalkSorting(newSort))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Feed);
