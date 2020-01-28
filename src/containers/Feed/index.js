@@ -13,8 +13,8 @@ class Feed extends Component {
         const mostViewed = this.props.mostViewed;
         const trending = this.props.trending;
 
-        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day");
-        if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day");
+        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "en", "");
+        if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day", "en", "");
     }
 
     fetchMoreVideos = section => {
@@ -46,13 +46,12 @@ const mapStateToProps = state => ({
     sponsored: state.feedModule.sponsored,
     mostViewed: state.feedModule.mostViewed,
     trending: state.feedModule.trending,
-    mostTalked: state.feedModule.mostTalked,
-    initialFetch: state.feedModule.initialFetch
+    mostTalked: state.feedModule.mostTalked
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchMostViewed: timeSort => dispatch(fetchMostViewed(timeSort)),
-    fetchTrending: timeSort => dispatch(fetchTrending(timeSort)),
+    fetchMostViewed: (timeSort, language, cursor) => dispatch(fetchMostViewed(timeSort, language, cursor)),
+    fetchTrending: (timeSort, language, cursor) => dispatch(fetchTrending(timeSort, language, cursor)),
     updateViewSorting: newSort => dispatch(_updateViewSorting(newSort)),
     updateTalkSorting: newSort => dispatch(_updateTalkSorting(newSort))
 });
