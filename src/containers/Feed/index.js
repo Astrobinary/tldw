@@ -13,7 +13,7 @@ class Feed extends Component {
         const mostViewed = this.props.mostViewed;
         // const trending = this.props.trending;
 
-        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "en", "");
+        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "en", false, "");
         // if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day", "en", "");
     }
 
@@ -23,7 +23,7 @@ class Feed extends Component {
         if (section === "mostViewed" && !this.hasError(this.props.mostViewed)) {
             console.log(this.hasError(this.props.mostViewed));
             const mostViewed = this.props.mostViewed;
-            this.props.fetchMostViewed(mostViewed.currentSort, "en", `&cursor=${mostViewed[mostViewed.currentSort].cursor}`);
+            this.props.fetchMostViewed(mostViewed.currentSort, "en", true, `&cursor=${mostViewed[mostViewed.currentSort].cursor}`);
         }
     };
 
@@ -33,7 +33,7 @@ class Feed extends Component {
             this.props.updateViewSorting(newSort);
 
             if (mostViewed[newSort].videos.length === 0) {
-                this.props.fetchMostViewed(newSort, "en", "");
+                this.props.fetchMostViewed(newSort, "en", false, "");
             }
         }
 
@@ -56,7 +56,7 @@ class Feed extends Component {
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
-                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
+                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={this.props.mostViewed[this.props.mostViewed.currentSort].videos} />
                 <Ad />
                 <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
                 <Ad />
@@ -74,8 +74,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchMostViewed: (timeSort, language, cursor) => dispatch(fetchMostViewed(timeSort, language, cursor)),
-    fetchTrending: (timeSort, language, cursor) => dispatch(fetchTrending(timeSort, language, cursor)),
+    fetchMostViewed: (timeSort, language, appendVideos, cursor) => dispatch(fetchMostViewed(timeSort, language, appendVideos, cursor)),
+    fetchTrending: (timeSort, language, appendVideos, cursor) => dispatch(fetchTrending(timeSort, language, appendVideos, cursor)),
     updateViewSorting: newSort => dispatch(_updateViewSorting(newSort)),
     updateTalkSorting: newSort => dispatch(_updateTalkSorting(newSort))
 });

@@ -6,52 +6,23 @@ import Thumbnail from "../Thumbnail";
 import SectionTitle from "./../SectionTitle";
 import ViewMoreBtn from "./../ViewMoreBtn";
 
-const ThumbnailSection = props => (
-    <section className="ThumbnailSection">
-        <SectionTitle titleText={props.titleText} haveSort={props.haveSort} from={props.from} updateSortFunc={props.updateSorting} />
-        <div className={`thumbnail-contain ${props.extraStyle}`}>
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-        </div>
-        <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} />
-    </section>
-);
+const ThumbnailSection = props => {
+    if (props.videos === undefined) {
+        return <span>Loading...</span>;
+    }
+
+    return (
+        <section className="ThumbnailSection">
+            <SectionTitle titleText={props.titleText} haveSort={props.haveSort} from={props.from} updateSortFunc={props.updateSorting} />
+            <div className={`thumbnail-contain ${props.extraStyle}`}>
+                {props.videos.map(video => (
+                    <Thumbnail key={video.slug} {...video} />
+                ))}
+            </div>
+            <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} />
+        </section>
+    );
+};
 
 ThumbnailSection.propTypes = {
     from: PropTypes.string.isRequired,

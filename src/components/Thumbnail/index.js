@@ -13,18 +13,18 @@ import thumbnail from "./thumbnail_sample.jpg";
 const Thumbnail = props => (
     <div className="Thumbnail">
         <section className="top-section">
-            <img className="avatar" src={avatar} alt="avatar" />
+            {/* <img className="avatar" src={props.broadcaster.logo} alt="avatar" /> */}
 
             <div className="stats">
-                <div className="text">69,696</div>
-                <div className="text">Astrobinary</div>
+                <div className="text">{props.views}</div>
+                <div className="text">{props.broadcaster.display_name}</div>
             </div>
 
             <span className="date">2 days ago</span>
         </section>
 
-        <img className="preview-image" src={thumbnail} alt="preview" />
-        <div className="title">Random video title goes here.</div>
+        <img className="preview-image" src={props.thumbnails.medium} alt="preview" />
+        <div className="title">{props.title}</div>
     </div>
 );
 
