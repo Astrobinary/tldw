@@ -14,12 +14,12 @@ const ThumbnailSection = props => {
     return (
         <section className="ThumbnailSection">
             <SectionTitle titleText={props.titleText} haveSort={props.haveSort} from={props.from} updateSortFunc={props.updateSorting} />
-            <div className={`thumbnail-contain ${props.extraStyle}`}>
+            <div className={`thumbnail-contain`} style={{ gridTemplateRows: `repeat(${props.rowDisplayNumber}, 1fr)` }}>
                 {props.videos.map(video => (
                     <Thumbnail key={video.slug} {...video} />
                 ))}
             </div>
-            <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} />
+            <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} rowDisplayStyle={props.rowDisplayStyle} />
         </section>
     );
 };

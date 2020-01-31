@@ -10,11 +10,15 @@ const TRENDING_FAIL = "feed/TRENDING_FAIL";
 const UPDATE_VIEW_SORTING = "feed/UPDATE_VIEWED_SORTING";
 const UPDATE_TALK_SORTING = "feed/UPDATE_TALKED_SORTING";
 
+const UPDATE_ROW_DISPLAY = "feed/UPDATE_ROW_DISPLAY";
+
 /* INITIAL DATA */
 const initialData = {
     videos: [],
     cursor: "",
     isFetching: false,
+    rowDisplayStyle: "grid-template-rows: repeat(2, 1fr);",
+    rowDisplayNumber: 2,
     error: false
 };
 
@@ -95,6 +99,13 @@ export function _updateTalkSorting(newSort) {
     };
 }
 
+export function _updateRowDisplay(timeSort) {
+    return {
+        type: UPDATE_ROW_DISPLAY,
+        timeSort
+    };
+}
+
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         /* MOSTVIEWED */
@@ -141,6 +152,11 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, {
                 mostTalked: { ...state.mostTalked, currentSort: action.newSort }
             });
+
+        case UPDATE_ROW_DISPLAY:
+            return Object.assign({}, state, {
+                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], rowDisplayStyle: `grid-template-rows: repeat(${state.mostViewed[action.timeSort].rowDisplayNumber + 2}, 1fr);`, rowDisplayNumber: state.mostViewed[action.timeSort].rowDisplayNumber + 2 } }
+            });
         default:
             return state;
     }
@@ -152,11 +168,13 @@ const api = "https://api.twitch.tv/kraken";
 /* Most Viewed Section */
 export const fetchMostViewed = (timeSort, language, appendVideos, cursor) => dispatch => {
     dispatch(_mostViewedRequest(timeSort));
+    if (appendVideos) dispatch(_updateRowDisplay(timeSort));
 
     return fetch(`${api}/clips/top?limit=25&period=${timeSort}&language=${language}${cursor}`, options)
         .then(response => response.json())
         .then(json => {
             if (json.status === 500) throw new Error("No more clips...");
+
             return dispatch(_mostViewedSuccess(timeSort, json.clips, appendVideos, json._cursor));
         })
         .catch(error => {

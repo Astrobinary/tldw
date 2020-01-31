@@ -53,10 +53,14 @@ class Feed extends Component {
     };
 
     render() {
+        const mostViewed = this.props.mostViewed;
+        const currentSort = mostViewed[mostViewed.currentSort];
+        console.log(currentSort.rowDisplayNumber);
+
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
-                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={this.props.mostViewed[this.props.mostViewed.currentSort].videos} />
+                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowDisplayNumber={currentSort.rowDisplayNumber} haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
                 <Ad />
                 <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
                 <Ad />
