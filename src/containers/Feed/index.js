@@ -11,21 +11,45 @@ import "./feed.scss";
 class Feed extends Component {
     componentDidMount() {
         const mostViewed = this.props.mostViewed;
-        const trending = this.props.trending;
+        // const trending = this.props.trending;
 
         if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "en", "");
-        if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day", "en", "");
+        // if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day", "en", "");
     }
 
     fetchMoreVideos = section => {
         console.log(`Fetching more ${section} for ${this.props[section].currentSort}`);
+
+        if (section === "mostViewed" && !this.hasError(this.props.mostViewed)) {
+            console.log(this.hasError(this.props.mostViewed));
+            const mostViewed = this.props.mostViewed;
+            this.props.fetchMostViewed(mostViewed.currentSort, "en", `&cursor=${mostViewed[mostViewed.currentSort].cursor}`);
+        }
     };
 
     updateSorting = (from, newSort) => {
-        if (from === "mostViewed") this.props.updateViewSorting(newSort);
-        if (from === "mostTalked") this.props.updateTalkSorting(newSort);
+        if (from === "mostViewed") {
+            const mostViewed = this.props.mostViewed;
+            this.props.updateViewSorting(newSort);
+
+            if (mostViewed[newSort].videos.length === 0) {
+                this.props.fetchMostViewed(newSort, "en", "");
+            }
+        }
+
+        if (from === "mostTalked") {
+            this.props.updateTalkSorting(newSort);
+        }
 
         console.log(`${from} is changing sort to ${newSort}`);
+    };
+
+    hasError = sectionObj => {
+        if (sectionObj[sectionObj.currentSort].error === false) {
+            return false;
+        } else {
+            return true;
+        }
     };
 
     render() {

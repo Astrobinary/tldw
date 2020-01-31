@@ -145,10 +145,10 @@ const api = "https://api.twitch.tv/kraken";
 export const fetchMostViewed = (timeSort, language, cursor) => dispatch => {
     dispatch(_mostViewedRequest(timeSort));
 
-    return fetch(`${api}/clips/top?limit=100&period=${timeSort}&language=${language}${cursor}`, options)
+    return fetch(`${api}/clips/top?limit=25&period=${timeSort}&language=${language}${cursor}`, options)
         .then(response => response.json())
         .then(json => {
-            console.log(json);
+            if (json.status === 500) throw new Error("No more clips...");
             return dispatch(_mostViewedSuccess(timeSort, json.clips, json._cursor));
         })
         .catch(error => {
