@@ -40,11 +40,12 @@ export function _mostViewedRequest(timeSort) {
         timeSort
     };
 }
-export function _mostViewedSuccess(timeSort, videos, cursor) {
+export function _mostViewedSuccess(timeSort, videos, appendVideos, cursor) {
     return {
         type: MOSTVIEWED_SUCCESS,
         timeSort,
         videos,
+        appendVideos,
         cursor
     };
 }
@@ -102,9 +103,16 @@ export default function reducer(state = initialState, action) {
                 mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: true } }
             });
         case MOSTVIEWED_SUCCESS:
-            return Object.assign({}, state, {
-                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, videos: action.videos, cursor: action.cursor } }
-            });
+            if (action.appendVideos) {
+                return Object.assign({}, state, {
+                    mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, videos: [...state.mostViewed[action.timeSort].videos, ...action.videos], cursor: action.cursor } }
+                });
+            } else {
+                return Object.assign({}, state, {
+                    mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, videos: action.videos, cursor: action.cursor } }
+                });
+            }
+
         case MOSTVIEWED_FAIL:
             return Object.assign({}, state, {
                 mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, error: action.error } }
@@ -142,14 +150,14 @@ const options = { headers: { "Client-ID": "15c6l9641yo97kt42nnsa51vrwp70y", Acce
 const api = "https://api.twitch.tv/kraken";
 
 /* Most Viewed Section */
-export const fetchMostViewed = (timeSort, language, cursor) => dispatch => {
+export const fetchMostViewed = (timeSort, language, appendVideos, cursor) => dispatch => {
     dispatch(_mostViewedRequest(timeSort));
 
     return fetch(`${api}/clips/top?limit=25&period=${timeSort}&language=${language}${cursor}`, options)
         .then(response => response.json())
         .then(json => {
             if (json.status === 500) throw new Error("No more clips...");
-            return dispatch(_mostViewedSuccess(timeSort, json.clips, json._cursor));
+            return dispatch(_mostViewedSuccess(timeSort, json.clips, appendVideos, json._cursor));
         })
         .catch(error => {
             console.error(`Error Fetching (Most Viewed): ${error}`);
