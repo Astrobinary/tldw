@@ -10,7 +10,7 @@ import "./thumbnail.scss";
 const Thumbnail = props => (
     <div className="Thumbnail">
         <section className="top-section">
-            {/* <img className="avatar" src={props.broadcaster.logo} alt="avatar" /> */}
+            <img className="avatar" src={props.broadcaster.logo} alt="avatar" />
 
             <div className="stats">
                 <div className="text">{props.views}</div>
