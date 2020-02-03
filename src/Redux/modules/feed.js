@@ -6,14 +6,13 @@ const MOSTVIEWED_FAIL = "feed/MOSTVIEWED_FAIL";
 const UPDATE_VIEW_SORTING = "feed/UPDATE_VIEWED_SORTING";
 const UPDATE_TALK_SORTING = "feed/UPDATE_TALKED_SORTING";
 
-const UPDATE_ROW_DISPLAY = "feed/UPDATE_ROW_DISPLAY";
+const INCREASE_ROW_DISPLAY = "feed/INCREASE_ROW_DISPLAY";
 
 /* INITIAL DATA */
 const initialData = {
     videos: [],
     cursor: "",
     isFetching: false,
-    rowDisplayStyle: "grid-template-rows: repeat(2, 1fr);",
     rowDisplayNumber: 2,
     error: false
 };
@@ -72,9 +71,9 @@ export function _updateTalkSorting(newSort) {
     };
 }
 
-export function _updateRowDisplay(timeSort) {
+export function _increaseRowDisplay(timeSort) {
     return {
-        type: UPDATE_ROW_DISPLAY,
+        type: INCREASE_ROW_DISPLAY,
         timeSort
     };
 }
@@ -96,7 +95,6 @@ export default function reducer(state = initialState, action) {
                     mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], isFetching: false, videos: action.videos, cursor: action.cursor } }
                 });
             }
-
         case MOSTVIEWED_FAIL:
             return Object.assign({}, state, {
                 mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], videos: [...state.mostViewed[action.timeSort].videos], isFetching: false, error: action.error } }
@@ -113,9 +111,9 @@ export default function reducer(state = initialState, action) {
             });
 
         /* ROW DISPLAY */
-        case UPDATE_ROW_DISPLAY:
+        case INCREASE_ROW_DISPLAY:
             return Object.assign({}, state, {
-                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], rowDisplayStyle: `grid-template-rows: repeat(${state.mostViewed[action.timeSort].rowDisplayNumber + 2}, 1fr);`, rowDisplayNumber: state.mostViewed[action.timeSort].rowDisplayNumber + 2 } }
+                mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], rowDisplayNumber: state.mostViewed[action.timeSort].rowDisplayNumber + 2 } }
             });
         default:
             return state;
@@ -129,11 +127,10 @@ const api = "https://api.twitch.tv/kraken";
 export const fetchMostViewed = (timeSort, language, appendVideos, cursor) => dispatch => {
     dispatch(_mostViewedRequest(timeSort));
 
-    return fetch(`${api}/clips/top?&period=${timeSort}&language=${language}${cursor}`, options)
+    return fetch(`${api}/clips/top?&limit=25&period=${timeSort}&language=${language}${cursor}`, options)
         .then(response => response.json())
         .then(json => {
             if (json.status === 500) throw new Error("No more clips...");
-
             return dispatch(_mostViewedSuccess(timeSort, json.clips, appendVideos, json._cursor));
         })
         .catch(error => {

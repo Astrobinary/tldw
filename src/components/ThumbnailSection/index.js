@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./thumbnailcontainer.scss";
+import "./thumbnailsection.scss";
 
 import Thumbnail from "../Thumbnail";
 import SectionTitle from "./../SectionTitle";
@@ -19,6 +19,7 @@ const ThumbnailSection = props => {
                     <Thumbnail key={video.slug} {...video} />
                 ))}
             </div>
+
             <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} rowDisplayStyle={props.rowDisplayStyle} />
         </section>
     );

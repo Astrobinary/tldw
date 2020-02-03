@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { fetchMostViewed, _updateRowDisplay, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
+import { fetchMostViewed, _increaseRowDisplay, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
 
 import ThumbnailSection from "../../components/ThumbnailSection";
 import Ad from "../../components/Ad";
@@ -11,10 +11,8 @@ import "./feed.scss";
 class Feed extends Component {
     componentDidMount() {
         const mostViewed = this.props.mostViewed;
-        // const trending = this.props.trending;
 
         if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "en", false, "");
-        // if (trending[trending.currentSort].videos.length === 0) this.props.fetchTrending("day", "en", "");
     }
 
     fetchMoreVideos = section => {
@@ -23,9 +21,9 @@ class Feed extends Component {
         if (section === "mostViewed" && !this.hasError(this.props.mostViewed) && !this.props[section][this.props[section].currentSort].isFetching) {
             const mostViewed = this.props.mostViewed;
             this.props.fetchMostViewed(mostViewed.currentSort, "en", true, `&cursor=${mostViewed[mostViewed.currentSort].cursor}`);
-            this.props.updateRowDisplay(this.props[section].currentSort);
+            this.props.increaseRowDisplay(this.props[section].currentSort);
         } else {
-            this.props.updateRowDisplay(this.props[section].currentSort);
+            this.props.increaseRowDisplay(this.props[section].currentSort);
         }
     };
 
@@ -82,7 +80,10 @@ const mapDispatchToProps = dispatch => ({
     fetchMostViewed: (timeSort, language, appendVideos, cursor) => dispatch(fetchMostViewed(timeSort, language, appendVideos, cursor)),
     updateViewSorting: newSort => dispatch(_updateViewSorting(newSort)),
     updateTalkSorting: newSort => dispatch(_updateTalkSorting(newSort)),
-    updateRowDisplay: timeSort => dispatch(_updateRowDisplay(timeSort))
+    increaseRowDisplay: timeSort => dispatch(_increaseRowDisplay(timeSort))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Feed);
