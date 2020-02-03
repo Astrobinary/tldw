@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import VisibilitySensor from "react-visibility-sensor";
 import "./thumbnailsection.scss";
 
 import Thumbnail from "../Thumbnail";
@@ -11,6 +12,12 @@ const ThumbnailSection = props => {
         return <span>Loading...</span>;
     }
 
+    function onChange(isVisible) {
+        if (isVisible) {
+            props.viewMoreVisibility(props.from);
+        }
+    }
+
     return (
         <section className="ThumbnailSection">
             <SectionTitle titleText={props.titleText} haveSort={props.haveSort} from={props.from} updateSortFunc={props.updateSorting} />
@@ -18,9 +25,11 @@ const ThumbnailSection = props => {
                 {props.videos.map(video => (
                     <Thumbnail key={video.slug} {...video} />
                 ))}
+                <VisibilitySensor onChange={onChange} delayedCall={true} partialVisibility={true} intervalDelay={500}>
+                    <div className="last-element">No more videos to show...</div>
+                </VisibilitySensor>
             </div>
-
-            <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} rowDisplayStyle={props.rowDisplayStyle} />
+            {props.viewMore ? <ViewMoreBtn btnText={props.btnText} fetch={() => props.fetchMoreVideos(props.from)} rowDisplayStyle={props.rowDisplayStyle} /> : <ViewMoreBtn btnText="No more videos to see..." />}
         </section>
     );
 };

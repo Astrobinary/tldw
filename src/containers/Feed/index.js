@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { fetchMostViewed, _increaseRowDisplay, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
+import { fetchMostViewed, _viewMoreVisibility, _increaseRowDisplay, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
 
 import ThumbnailSection from "../../components/ThumbnailSection";
 import Ad from "../../components/Ad";
@@ -44,6 +44,11 @@ class Feed extends Component {
         console.log(`${from} is changing sort to ${newSort}`);
     };
 
+    dispatchViewMoreVisibility = from => {
+        console.log("here");
+        this.props.viewMoreVisibility(from, this.props[from].currentSort);
+    };
+
     hasError = sectionObj => {
         if (sectionObj[sectionObj.currentSort].error === false) {
             return false;
@@ -59,7 +64,7 @@ class Feed extends Component {
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
-                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowDisplayNumber={currentSort.rowDisplayNumber} haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
+                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowDisplayNumber={currentSort.rowDisplayNumber} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
                 <Ad />
                 <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
                 <Ad />
@@ -80,7 +85,8 @@ const mapDispatchToProps = dispatch => ({
     fetchMostViewed: (timeSort, language, appendVideos, cursor) => dispatch(fetchMostViewed(timeSort, language, appendVideos, cursor)),
     updateViewSorting: newSort => dispatch(_updateViewSorting(newSort)),
     updateTalkSorting: newSort => dispatch(_updateTalkSorting(newSort)),
-    increaseRowDisplay: timeSort => dispatch(_increaseRowDisplay(timeSort))
+    increaseRowDisplay: timeSort => dispatch(_increaseRowDisplay(timeSort)),
+    viewMoreVisibility: (from, currentSort) => dispatch(_viewMoreVisibility(from, currentSort))
 });
 
 export default connect(

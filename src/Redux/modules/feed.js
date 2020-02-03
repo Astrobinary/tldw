@@ -8,13 +8,16 @@ const UPDATE_TALK_SORTING = "feed/UPDATE_TALKED_SORTING";
 
 const INCREASE_ROW_DISPLAY = "feed/INCREASE_ROW_DISPLAY";
 
+const VIEW_MORE_VISIBILTY = "feed/VIEW_MORE_VISIBILTY";
+
 /* INITIAL DATA */
 const initialData = {
     videos: [],
     cursor: "",
     isFetching: false,
     rowDisplayNumber: 2,
-    error: false
+    error: false,
+    viewMore: true
 };
 
 const initialTimes = {
@@ -78,6 +81,14 @@ export function _increaseRowDisplay(timeSort) {
     };
 }
 
+export function _viewMoreVisibility(from, currentSort) {
+    return {
+        type: VIEW_MORE_VISIBILTY,
+        from,
+        currentSort
+    };
+}
+
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         /* MOSTVIEWED */
@@ -114,6 +125,11 @@ export default function reducer(state = initialState, action) {
         case INCREASE_ROW_DISPLAY:
             return Object.assign({}, state, {
                 mostViewed: { ...state.mostViewed, [action.timeSort]: { ...state.mostViewed[action.timeSort], rowDisplayNumber: state.mostViewed[action.timeSort].rowDisplayNumber + 2 } }
+            });
+
+        case VIEW_MORE_VISIBILTY:
+            return Object.assign({}, state, {
+                mostViewed: { ...state[action.from], [action.currentSort]: { ...state[action.from][action.currentSort], viewMore: false } }
             });
         default:
             return state;
