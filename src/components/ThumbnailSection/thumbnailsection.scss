@@ -1,16 +1,25 @@
 .ThumbnailSection {
+    // .thumbnail-contain {
+    //     margin-top: 10px;
+    //     display: grid;
+    //     grid-auto-rows: 0;
+    //     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    //     grid-template-rows: repeat(2, 1fr);
+    //     justify-items: center;
+    //     overflow-y: hidden;
+    //     padding: 0 10px;
+    //     padding-top: 20px;
+    //     background: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.5) 200%, black 100%);
+    //     transition: all 0.3s ease;
+    // }
+
     .thumbnail-contain {
-        margin-top: 10px;
-        display: grid;
-        grid-auto-rows: 0;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-template-rows: repeat(2, 1fr);
-        justify-items: center;
-        overflow-y: hidden;
-        padding: 0 10px;
-        padding-top: 20px;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.5) 200%, black 100%);
-        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        margin-top: 20px;
+        transition: height 1s ease-in-out;
     }
 
     .sponsor {

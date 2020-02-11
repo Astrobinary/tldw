@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { fetchMostViewed, _viewMoreVisibility, _increaseRowDisplay, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
+import { fetchMostViewed, _viewMoreVisibility, _setRowCount, _updateViewSorting, _updateTalkSorting } from "../../redux/modules/feed";
 
 import ThumbnailSection from "../../components/ThumbnailSection";
 import Ad from "../../components/Ad";
@@ -11,20 +11,25 @@ import "./feed.scss";
 class Feed extends Component {
     componentDidMount() {
         const mostViewed = this.props.mostViewed;
-
-        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "en", false, "");
+        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "", false, "");
     }
 
-    fetchMoreVideos = section => {
-        console.log(`Fetching more ${section} for ${this.props[section].currentSort}`);
+    showMoreVideos = (from, ref) => {
+        const section = this.props[from];
+        const currentSort = section.currentSort;
+        const videoLength = section[currentSort].videos.length;
+        const perRow = ref.current.clientWidth / 304;
+        const maxRows = Math.floor(videoLength / perRow);
 
-        if (section === "mostViewed" && !this.hasError(this.props.mostViewed) && !this.props[section][this.props[section].currentSort].isFetching) {
-            const mostViewed = this.props.mostViewed;
-            this.props.fetchMostViewed(mostViewed.currentSort, "en", true, `&cursor=${mostViewed[mostViewed.currentSort].cursor}`);
-            this.props.increaseRowDisplay(this.props[section].currentSort);
-        } else {
-            this.props.increaseRowDisplay(this.props[section].currentSort);
-        }
+        let newCount = section[currentSort].rowCount;
+
+        if (section[currentSort].rowCount <= maxRows) {
+            if (newCount + 2 > maxRows ? newCount++ : (newCount += 2));
+        
+            console.log(`Showing more ${from} for ${this.props[from].currentSort}`);
+            this.props.setRowCount(from, currentSort, newCount);
+        } 
+
     };
 
     updateSorting = (from, newSort) => {
@@ -33,7 +38,7 @@ class Feed extends Component {
             this.props.updateViewSorting(newSort);
 
             if (mostViewed[newSort].videos.length === 0) {
-                this.props.fetchMostViewed(newSort, "en", false, "");
+                this.props.fetchMostViewed(newSort, "", false, "");
             }
         }
 
@@ -45,7 +50,6 @@ class Feed extends Component {
     };
 
     dispatchViewMoreVisibility = from => {
-        console.log("here");
         this.props.viewMoreVisibility(from, this.props[from].currentSort);
     };
 
@@ -64,11 +68,11 @@ class Feed extends Component {
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
-                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowDisplayNumber={currentSort.rowDisplayNumber} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
+                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowCount={currentSort.rowCount} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} showMoreVideos={this.showMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
                 <Ad />
-                <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
+                <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} showMoreVideos={this.showMoreVideos} updateSorting={this.updateSorting} />
                 <Ad />
-                <ThumbnailSection titleText="most talked about" from="mostTalked" btnText="look for more drama" haveSort={true} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} />
+                <ThumbnailSection titleText="most talked about" from="mostTalked" btnText="look for more drama" haveSort={true} showMoreVideos={this.showMoreVideos} updateSorting={this.updateSorting} />
             </section>
         );
     }
@@ -85,11 +89,8 @@ const mapDispatchToProps = dispatch => ({
     fetchMostViewed: (timeSort, language, appendVideos, cursor) => dispatch(fetchMostViewed(timeSort, language, appendVideos, cursor)),
     updateViewSorting: newSort => dispatch(_updateViewSorting(newSort)),
     updateTalkSorting: newSort => dispatch(_updateTalkSorting(newSort)),
-    increaseRowDisplay: timeSort => dispatch(_increaseRowDisplay(timeSort)),
+    setRowCount: (from, timeSort, newHight) => dispatch(_setRowCount(from, timeSort, newHight)),
     viewMoreVisibility: (from, currentSort) => dispatch(_viewMoreVisibility(from, currentSort))
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);
