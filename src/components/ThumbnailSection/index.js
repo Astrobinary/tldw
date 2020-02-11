@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import VisibilitySensor from "react-visibility-sensor";
 import "./thumbnailsection.scss";
 
 import Thumbnail from "../Thumbnail";
@@ -64,8 +63,7 @@ class ThumbnailSection extends Component {
     };
 
     fetchMoreVideos = () => {
-        // this.props.fetchMoreVideos(this.props.from);
-
+        this.props.fetchMoreVideos(this.props.from);
         return <ViewMoreBtn btnText="fetching more videos..." />;
     };
 
