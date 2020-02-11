@@ -37,8 +37,6 @@ class ThumbnailSection extends Component {
     }
 
     renderThumbnails = () => {
-        
-
         let extra = [];
         let thumbnails = this.props.videos;
         let amount = 0;
@@ -65,22 +63,20 @@ class ThumbnailSection extends Component {
         );
     };
 
+    fetchMoreVideos = () => {
+        // this.props.fetchMoreVideos(this.props.from);
+
+        return <ViewMoreBtn btnText="fetching more videos..." />;
+    };
+
     render() {
         if (!this.props.videos) return <span>Loading...{this.props.titleText}</span>;
-           
-        
-
 
         let thumbnails = this.renderThumbnails();
 
-
-       
         const videoLength = this.props.videos.length;
         const perRow = this.state.width / 304;
         const maxRows = Math.floor(videoLength / perRow);
-
-       
-
 
         return (
             <section className="ThumbnailSection" ref={this.selectRef}>
@@ -88,7 +84,7 @@ class ThumbnailSection extends Component {
                 <div className={`thumbnail-contain`}>
                     <React.Fragment>{thumbnails}</React.Fragment>
                 </div>
-                {this.props.rowCount < maxRows ? <ViewMoreBtn btnText={this.props.btnText} fetch={() => this.props.showMoreVideos(this.props.from, this.selectRef)} rowCount={this.props.rowCount} /> : <ViewMoreBtn btnText="No more videos to see..." />}
+                {this.props.rowCount < maxRows ? <ViewMoreBtn btnText={this.props.btnText} fetch={() => this.props.showMoreVideos(this.props.from, this.selectRef)} rowCount={this.props.rowCount} /> : this.fetchMoreVideos()}
             </section>
         );
     }

@@ -11,7 +11,7 @@ import "./feed.scss";
 class Feed extends Component {
     componentDidMount() {
         const mostViewed = this.props.mostViewed;
-        if (mostViewed[mostViewed.currentSort].videos.length === 0) this.props.fetchMostViewed("day", "", false, "");
+        if (mostViewed[mostViewed.currentSort].videos.length === 0 && !mostViewed[mostViewed.currentSort].isFetching) this.props.fetchMostViewed("day", "", false, "");
     }
 
     showMoreVideos = (from, ref) => {
@@ -25,11 +25,18 @@ class Feed extends Component {
 
         if (section[currentSort].rowCount <= maxRows) {
             if (newCount + 2 > maxRows ? newCount++ : (newCount += 2));
-        
+
             console.log(`Showing more ${from} for ${this.props[from].currentSort}`);
             this.props.setRowCount(from, currentSort, newCount);
-        } 
+        }
+    };
 
+    fetchMoreVideos = from => {
+        if (this.props[from][this.props[from].currentSort].cursor === "") return;
+
+        if (!this.props[from][this.props[from].currentSort].isFetching) {
+            this.props.fetchMostViewed(this.props[from].currentSort, "", true, `&cursor=${this.props[from][this.props[from].currentSort].cursor}`);
+        }
     };
 
     updateSorting = (from, newSort) => {
@@ -68,7 +75,7 @@ class Feed extends Component {
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
-                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowCount={currentSort.rowCount} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} showMoreVideos={this.showMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
+                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowCount={currentSort.rowCount} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} showMoreVideos={this.showMoreVideos} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
                 <Ad />
                 <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} showMoreVideos={this.showMoreVideos} updateSorting={this.updateSorting} />
                 <Ad />
