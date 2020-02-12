@@ -75,7 +75,7 @@ class Feed extends Component {
         return (
             <section className="Feed">
                 <ThumbnailSection titleText="sponsored clips" from="sponsored" haveSort={false} extraStyle="sponsor" />
-                <ThumbnailSection titleText="most viewed" from="mostViewed" btnText="keep them coming" rowCount={currentSort.rowCount} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} showMoreVideos={this.showMoreVideos} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
+                <ThumbnailSection router={this.props.router} titleText="most viewed" from="mostViewed" btnText="keep them coming" rowCount={currentSort.rowCount} viewMore={currentSort.viewMore} viewMoreVisibility={this.dispatchViewMoreVisibility} haveSort={true} showMoreVideos={this.showMoreVideos} fetchMoreVideos={this.fetchMoreVideos} updateSorting={this.updateSorting} videos={mostViewed[mostViewed.currentSort].videos} />
                 <Ad />
                 <ThumbnailSection titleText="newly trending" from="trending" btnText="see what else is new" haveSort={false} showMoreVideos={this.showMoreVideos} updateSorting={this.updateSorting} />
                 <Ad />
@@ -89,7 +89,8 @@ const mapStateToProps = state => ({
     sponsored: state.feedModule.sponsored,
     mostViewed: state.feedModule.mostViewed,
     trending: state.feedModule.trending,
-    mostTalked: state.feedModule.mostTalked
+    mostTalked: state.feedModule.mostTalked,
+    router: state.router
 });
 
 const mapDispatchToProps = dispatch => ({

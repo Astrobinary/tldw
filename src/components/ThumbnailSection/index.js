@@ -5,6 +5,7 @@ import "./thumbnailsection.scss";
 import Thumbnail from "../Thumbnail";
 import SectionTitle from "./../SectionTitle";
 import ViewMoreBtn from "./../ViewMoreBtn";
+import { Link } from "react-router-dom";
 
 class ThumbnailSection extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class ThumbnailSection extends Component {
         this.updateDimensions();
     }
     componentWillUnmount() {
-        window.removeEventListener("resize", () => {});
+        window.removeEventListener("resize", () => { });
     }
 
     updateDimensions() {
@@ -53,8 +54,10 @@ class ThumbnailSection extends Component {
 
         return (
             <React.Fragment>
-                {thumbnails.slice(0, perRow * this.props.rowCount).map(video => (
-                    <Thumbnail key={video.slug} {...video} />
+                {thumbnails.slice(0, perRow * this.props.rowCount).map((video, index) => (
+                    <Link key={video.slug} to={{ pathname: `${this.props.router.location.pathname}/${video.slug}`, state: { videos: thumbnails, current: index } }}>
+                        <Thumbnail {...video} />
+                    </Link>
                 ))}
 
                 {extra}
