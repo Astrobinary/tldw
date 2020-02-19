@@ -40,6 +40,11 @@ class SectionTitle extends Component {
         };
     }
 
+    componentDidMount() {
+        console.log(this.props);
+        this.props.updateSortFunc(this.props.from, this.state.currentSort.key);
+    }
+
     toggleMenu = () => {
         this.setState({ showMenu: !this.state.showMenu });
     };
