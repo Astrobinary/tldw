@@ -41,8 +41,7 @@ class SectionTitle extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
-        this.props.updateSortFunc(this.props.from, this.state.currentSort.key);
+        this.props.updateSortFunc(this.props.from, this.props.currentSort);
     }
 
     toggleMenu = () => {
@@ -53,6 +52,12 @@ class SectionTitle extends Component {
         this.props.updateSortFunc(this.props.from, newSort.key);
         this.setState({ currentSort: newSort });
         this.toggleMenu();
+    };
+
+    getSortText = () => {
+        const key = this.props.currentSort;
+        const current = this.state.list.filter(obj => obj.key === key);
+        return current[0].text;
     };
 
     render() {
@@ -75,7 +80,7 @@ class SectionTitle extends Component {
             <div className="section-title">
                 {this.props.titleText}
                 <span className="current-item" onClick={() => this.toggleMenu()}>
-                    {this.state.currentSort.text} {this.props.from === "sponsored" ? <Sponsor /> : null}
+                    {this.getSortText()} {this.props.from === "sponsored" ? <Sponsor /> : null}
                 </span>
                 {this.state.showMenu ? mappedSort : null}
             </div>

@@ -23,7 +23,7 @@ class ThumbnailSection extends Component {
         this.updateDimensions();
     }
     componentWillUnmount() {
-        window.removeEventListener("resize", () => { });
+        window.removeEventListener("resize", () => {});
     }
 
     updateDimensions() {
@@ -81,7 +81,7 @@ class ThumbnailSection extends Component {
 
         return (
             <section className="ThumbnailSection" ref={this.selectRef}>
-                <SectionTitle titleText={this.props.titleText} haveSort={this.props.haveSort} from={this.props.from} updateSortFunc={this.props.updateSorting} />
+                <SectionTitle titleText={this.props.titleText} haveSort={this.props.haveSort} from={this.props.from} currentSort={this.props.currentSort} updateSortFunc={this.props.updateSorting} />
                 <div className={`thumbnail-contain`}>
                     <React.Fragment>{thumbnails}</React.Fragment>
                 </div>
