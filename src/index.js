@@ -16,6 +16,9 @@ import Playlists from "./containers/Playlists";
 
 //Components
 import Navbar from "./components/Navbar";
+import _playlistPlayerView from "./components/PlaylistPlayerView";
+import _singlePlayerView from "./components/SinglePlayerView";
+
 
 const isIE = () => {
     var ua = window.navigator.userAgent; //Check the userAgent property of the window.navigator object
@@ -37,6 +40,10 @@ if (isIE()) {
                 <Switch>
                     <Redirect from="/" exact to="/feed" />
                     <Route exact path="/feed" component={Feed} />
+                    <Route exact path="/feed/:from/playlist" component={_playlistPlayerView} />
+                    <Route exact path="/feed/:from/single" component={_singlePlayerView} />
+
+
                     <Route exact path="/streamers" component={Streamers} />
                     <Route exact path="/games" component={Games} />
                     <Route exact path="/playlists" component={Playlists} />

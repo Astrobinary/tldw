@@ -11,9 +11,7 @@ class ThumbnailSection extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            width: null
-        };
+        this.state = { width: null };
 
         this.selectRef = React.createRef();
     }
@@ -55,7 +53,7 @@ class ThumbnailSection extends Component {
         return (
             <React.Fragment>
                 {thumbnails.slice(0, perRow * this.props.rowCount).map((video, index) => (
-                    <Link key={video.slug} to={{ pathname: `${this.props.router.location.pathname}/${video.slug}`, state: { videos: thumbnails, current: index } }}>
+                    <Link key={video.slug} to={{ pathname: `${this.props.router.location.pathname}/${this.props.from.toLowerCase()}/playlist`, search: `?slug=${video.slug}`, hash: `${index}`, state: { videos: thumbnails } }}>
                         <Thumbnail {...video} />
                     </Link>
                 ))}
