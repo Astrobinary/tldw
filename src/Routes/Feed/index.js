@@ -21,5 +21,3 @@ export const Feed = () => {
 		</section>
 	);
 };
-
-// export default connect(null, mapDispatch)(Feed);

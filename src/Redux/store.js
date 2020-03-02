@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import clipsReducer from './topClips';
 
 const reducer = {
-	clips: clipsReducer
+	topClips: clipsReducer
 };
 
 const store = configureStore({
