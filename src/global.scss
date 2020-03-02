@@ -1,29 +1,29 @@
 // https://visme.co/blog/modern-fonts/
 // https://www.behance.net/gallery/17725611/Kontanter-FREE-FONT
 
-@import "./variables.scss";
+@import './variables.scss';
 
 body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../src/images/background-min.jpg");
-    background-color: #8d899d;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
-    overflow-y: scroll;
+	margin: 0;
+	padding: 0;
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('../src/Assets/background-min.jpg');
+	background-color: #8d899d;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+	overflow-y: scroll;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 //Responsive
 @media only screen and (max-width: 640px) {
-    body {
-        background: none;
-        background-color: #8970a9;
-    }
+	body {
+		background: none;
+		background-color: #8970a9;
+	}
 }

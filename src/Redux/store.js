@@ -1,19 +1,17 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
-import { connectRouter, routerMiddleware } from "connected-react-router";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createBrowserHistory } from "history";
-import thunk from "redux-thunk";
+import { configureStore } from '@reduxjs/toolkit';
+import { createBrowserHistory } from 'history';
 
-import feedModule from "./modules/feed";
+import clipsReducer from './topClips';
+
+const reducer = {
+	clips: clipsReducer
+};
+
+const store = configureStore({
+	reducer,
+	devTools: process.env.NODE_ENV !== 'production'
+});
 
 export const history = createBrowserHistory();
 
-const reducer = history =>
-    combineReducers({
-        router: connectRouter(history),
-        feedModule
-    });
-
-export default function configureStore() {
-    return createStore(reducer(history), composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk)));
-}
+export default store;
