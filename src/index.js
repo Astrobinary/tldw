@@ -7,12 +7,15 @@ import configureStore, { history } from './Redux/store';
 import * as serviceWorker from './serviceWorker';
 import './global.scss';
 
+import Navbar from './Components/Navbar';
+
 //Routes
 import { Feed } from './Routes/Feed';
 
 let Index = () => (
 	<Provider store={configureStore}>
 		<Router history={history}>
+			<Navbar />
 			<Switch>
 				<Redirect from='/' exact to='/feed' />
 				<Route exact path='/feed' component={Feed} />

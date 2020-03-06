@@ -36,7 +36,15 @@
 		"build": "react-scripts build"
 	},
 	"eslintConfig": {
-		"extends": "react-app"
+		"extends": "react-app",
+		"env": {
+			"browser": true,
+			"node": true
+		},
+		"rules": {
+			"react-hooks/rules-of-hooks": "error",
+			"react-hooks/exhaustive-deps": "off"
+		}
 	},
 	"engines": {
 		"node": "10"
