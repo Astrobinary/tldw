@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import './sectionheader.scss';
 
 import { usePeriodSelection } from '../../Hooks/usePeriodSelection';
 
 export const SectionHeader = (props) => {
-	const { periodText, menu } = usePeriodSelection('mostViewed');
-	useEffect(() => {
-		console.log(`this si the new one: ${periodText}`);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [props.currentPeriod]);
+	const [showMenu, setShowMenu] = useState(false);
+	const { periodText, menu } = usePeriodSelection(props.from, setShowMenu);
 
 	return (
 		<div className='SectionHeader'>
-			{props.children}
-			<span className='current-item' onClick={() => this.toggleMenu()}>
+			{props.titleText}
+			<span className='current-item' onClick={() => setShowMenu(!showMenu)}>
 				{periodText}
 			</span>
-			{/* {this.state.showMenu ? mappedSort : null} */}
-			{menu}
+			{showMenu && menu}
 		</div>
 	);
 };
