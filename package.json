@@ -33,7 +33,7 @@
 		"env": {
 			"browser": true,
 			"node": true
-		},
+		}
 	},
 	"engines": {
 		"node": "10"
