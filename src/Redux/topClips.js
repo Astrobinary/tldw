@@ -5,7 +5,8 @@ const initialData = {
 	clips: [],
 	cursor: '',
 	isFetching: false,
-	error: false
+	error: false,
+	rowCount: 2
 };
 
 const initialTimes = {
@@ -36,9 +37,7 @@ const clipsSlice = createSlice({
 
 			location.isFetching = false;
 			location.cursor = cursor;
-
-			//if does not have cursor set array, else push
-			!location.cursor ? (location.clips = clips) : location.clips.push(...clips);
+			!location.cursor ? (location.clips = clips) : location.clips.push(...clips); //if does not have cursor set array, else push
 		},
 		getTopClips_Failure(state, action) {
 			const { error, from, period } = action.payload;
@@ -55,7 +54,7 @@ const { getTopClips_Start, getTopClips_Success, getTopClips_Failure } = clipsSli
 
 export const updatePeriod = clipsSlice.actions.updatePeriod;
 
-export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => async (dispatch) => {
+export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => async dispatch => {
 	try {
 		dispatch(getTopClips_Start({ from, period }));
 		const { clips, cursor } = await getTopClips(period, language, _cursor);

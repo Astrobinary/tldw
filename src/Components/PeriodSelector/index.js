@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { updatePeriod } from '../../Redux/topClips';
 import './sectionheader.scss';
 
-export const SectionHeader = (props) => {
+export const SectionHeader = props => {
 	const periodEnum = [
 		{ id: 0, text: 'today', key: 'day' },
 		{ id: 1, text: 'this week', key: 'week' },
@@ -14,18 +14,18 @@ export const SectionHeader = (props) => {
 
 	const [showMenu, setShowMenu] = useState(false);
 	const dispatch = useDispatch();
-	const periods = useSelector((state) => state.topClips[props.from]);
+	const periods = useSelector(state => state.topClips[props.from]);
 
 	const key = periods.currentPeriod;
-	const current = periodEnum.filter((obj) => obj.key === key);
+	const current = periodEnum.filter(obj => obj.key === key);
 	const periodText = current[0].text;
 
-	const updateMenu = (item) => {
+	const updateMenu = item => {
 		dispatch(updatePeriod({ from: props.from, newPeriod: item.key }));
 		setShowMenu(false);
 	};
 
-	const menu = periodEnum.map((item) => (
+	const menu = periodEnum.map(item => (
 		<span key={item.id} onClick={() => updateMenu(item)} className='sort-item'>
 			{item.key}
 		</span>

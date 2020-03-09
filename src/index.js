@@ -13,15 +13,17 @@ import Navbar from './Components/Navbar';
 import { Feed } from './Routes/Feed';
 
 let Index = () => (
-	<Provider store={configureStore}>
-		<Router history={history}>
-			<Navbar />
-			<Switch>
-				<Redirect from='/' exact to='/feed' />
-				<Route exact path='/feed' component={Feed} />
-			</Switch>
-		</Router>
-	</Provider>
+	<React.StrictMode>
+		<Provider store={configureStore}>
+			<Router history={history}>
+				<Navbar />
+				<Switch>
+					<Redirect from='/' exact to='/feed' />
+					<Route exact path='/feed' component={Feed} />
+				</Switch>
+			</Router>
+		</Provider>
+	</React.StrictMode>
 );
 
 ReactDOM.render(<Index />, document.getElementById('root'));
