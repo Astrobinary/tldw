@@ -24,7 +24,7 @@ const initialState = {
 };
 
 const clipsSlice = createSlice({
-	name: 'topClips',
+	name: 'feed',
 	initialState: initialState,
 	reducers: {
 		getTopClips_Start(state, action) {
@@ -54,7 +54,7 @@ const { getTopClips_Start, getTopClips_Success, getTopClips_Failure } = clipsSli
 
 export const updatePeriod = clipsSlice.actions.updatePeriod;
 
-export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => async dispatch => {
+export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => async (dispatch) => {
 	try {
 		dispatch(getTopClips_Start({ from, period }));
 		const { clips, cursor } = await getTopClips(period, language, _cursor);

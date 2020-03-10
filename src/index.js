@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import './global.scss';
 
 import Navbar from './Components/Navbar';
+import PlaylistPlayer from './Components/PlaylistPlayer';
 
 //Routes
 import { Feed } from './Routes/Feed';
@@ -20,6 +21,8 @@ let Index = () => (
 				<Switch>
 					<Redirect from='/' exact to='/feed' />
 					<Route exact path='/feed' component={Feed} />
+					<Redirect from='/feed/:from' exact to='/feed' />
+					<Route exact path='/feed/:from/playlist' component={PlaylistPlayer} />
 				</Switch>
 			</Router>
 		</Provider>

@@ -13,6 +13,7 @@
 		"@fortawesome/react-fontawesome": "^0.1.8",
 		"@reduxjs/toolkit": "^1.2.5",
 		"axios": "^0.19.2",
+		"dayjs": "^1.8.22",
 		"node-sass": "^4.13.1",
 		"prop-types": "^15.7.2",
 		"react": "^16.12.0",

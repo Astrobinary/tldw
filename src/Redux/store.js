@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createBrowserHistory } from 'history';
 
-import clipsReducer from './topClips';
+import clipsReducer from './feedReducer';
 
 const reducer = {
-	topClips: clipsReducer
+	feed: clipsReducer
 };
 
 const store = configureStore({

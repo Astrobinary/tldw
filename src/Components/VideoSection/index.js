@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './VideoSection.scss';
-import '../Thumbnail/Thumbnail.scss';
 
-const VideoSection = props => {
+import Thumbnail from '../Thumbnail';
+
+const VideoSection = (props) => {
+	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 304));
 	const videoSectionRef = useRef(null);
-	const [width, setWidth] = useState(window.innerWidth);
-	const [perRow, setPerRow] = useState(window.innerWidth / 304);
-
+	const location = useLocation();
 	const collection = props[props.currentPeriod];
 
 	const handleDimensions = () => {
-		setWidth(videoSectionRef.current.clientWidth);
 		setPerRow(Math.floor(videoSectionRef.current.clientWidth / 304));
 	};
 
@@ -20,15 +20,15 @@ const VideoSection = props => {
 		return () => {
 			window.removeEventListener('resize', handleDimensions);
 		};
-	}, []);
+	}, [location]);
 
+	//TODO Have a better loading spinner
 	if (collection.isFetching) return <span className='VideoSection'>Fetching data...</span>;
 
 	const renderThumbnails = () => {
 		let extraThumbnails = [];
 
-		const amount = Math.floor(perRow - (collection.clips.length % perRow));
-		console.log(amount);
+		const amount = perRow - (collection.clips.length % perRow);
 
 		for (let i = 0; i < amount; i++) {
 			extraThumbnails.push(<div key={i} style={{ width: '300px' }} />);
@@ -37,9 +37,9 @@ const VideoSection = props => {
 		return (
 			<React.Fragment>
 				{collection.clips.slice(0, perRow * collection.rowCount).map((video, index) => (
-					<div classname='Thumbnail' key={video.slug}>
-						<img src={video.thumbnails.medium} />
-					</div>
+					<Link key={video.slug} to={{ pathname: `${location.pathname}/${props.from}/playlist`, search: `?slug=${video.slug}&period=${props.currentPeriod}`, hash: `${index}` }}>
+						<Thumbnail {...video} />
+					</Link>
 				))}
 				{extraThumbnails}
 			</React.Fragment>
@@ -49,13 +49,13 @@ const VideoSection = props => {
 	return (
 		<section className='VideoSection' ref={videoSectionRef}>
 			{renderThumbnails()}
-			{/* {width} ---- {perRow} */}
 		</section>
 	);
 };
 
 VideoSection.propTypes = {
-	currentPeriod: PropTypes.string.isRequired
+	currentPeriod: PropTypes.string.isRequired,
+	from: PropTypes.string.isRequired
 };
 
 export default VideoSection;
