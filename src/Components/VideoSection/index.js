@@ -5,7 +5,7 @@ import './VideoSection.scss';
 
 import Thumbnail from '../Thumbnail';
 
-const VideoSection = (props) => {
+const VideoSection = props => {
 	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 304));
 	const videoSectionRef = useRef(null);
 	const location = useLocation();
@@ -37,7 +37,7 @@ const VideoSection = (props) => {
 		return (
 			<React.Fragment>
 				{collection.clips.slice(0, perRow * collection.rowCount).map((video, index) => (
-					<Link key={video.slug} to={{ pathname: `${location.pathname}/${props.from}/playlist`, search: `?slug=${video.slug}&period=${props.currentPeriod}`, hash: `${index}` }}>
+					<Link key={video.slug} to={{ pathname: `${location.pathname}/${props.from}/playlist`, search: `?slug=${video.slug}&period=${props.currentPeriod}`, hash: `${index}`, index }}>
 						<Thumbnail {...video} />
 					</Link>
 				))}
