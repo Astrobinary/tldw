@@ -1,0 +1,105 @@
+.VideoPlayer {
+	margin: 0 auto;
+	height: 50vh;
+	max-width: 55%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	z-index: 100;
+	pointer-events:auto;
+	background-color: black;
+	iframe {
+		box-shadow: 0 0 25px -5px rgba(0, 0, 0, 0.75);
+		z-index: 100;
+	}
+
+	.video-info {
+		display: flex;
+		height: 90px;
+		background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%, rgba(0, 0, 0, 1) 100%);
+
+		.streamer-logo {
+			margin-top: 10px;
+			margin-left: 10px;
+			width: 65px;
+			height: 65px;
+			border-radius: 65px;
+		}
+
+		.video-text {
+			display: flex;
+			flex-direction: column;
+			margin-left: 15px;
+			color: white;
+			font-weight: 500;
+			letter-spacing: 1px;
+			justify-content: center;
+			margin-top: -5px;
+			flex: 5 1;
+
+			.streamer-info {
+				display: flex;
+				flex-direction: row;
+				color: rgba(255, 255, 255, 0.5);
+				letter-spacing: 2px;
+				font-size: 12px;
+				transition: all 0.3s ease;
+				.streamer-name {
+					transition: all 0.3s ease;
+					border-bottom: 1px solid rgba(255, 255, 255, 0);
+					&:hover {
+						cursor: pointer;
+						color: rgba(255, 255, 255, 0.8);
+						opacity: 1;
+						border-bottom: 1px solid #ed4f74;
+					}
+				}
+
+				.streamer-game {
+					transition: all 0.3s ease;
+					border-bottom: 1px solid rgba(255, 255, 255, 0);
+					
+					&:hover {
+						cursor: pointer;
+						color: rgba(255, 255, 255, 0.8);
+						opacity: 1;
+						border-bottom: 1px solid #ed4f74;
+					}
+				}
+			}
+
+			.video-views{
+				font-size: 13px;
+				margin-top: 0px;
+				color: rgba(255, 255, 255, 0.5);
+				letter-spacing: 2px;
+				span{
+					font-size: 12px;
+				}
+			}
+		}
+
+		.video-interact {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin-top: -15px;
+
+			.interact-icon {
+				flex: 1;
+				font-size: 22px;
+				color: rgba(255, 255, 255, 0.3);
+				padding: 15px;
+				padding-bottom: 5px;
+				&:hover {
+					cursor: pointer;
+					color: rgba(255, 255, 255, 0.6);
+					opacity: 1;
+					border-bottom: 1px solid #ed4f74;
+				}
+
+			}
+		}
+	}
+}

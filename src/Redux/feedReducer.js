@@ -19,8 +19,8 @@ const initialTimes = {
 
 const initialState = {
 	sponsored: initialTimes,
-	mostViewed: initialTimes,
-	mostTalked: initialTimes
+	views: initialTimes,
+	drama: initialTimes
 };
 
 const clipsSlice = createSlice({
@@ -46,14 +46,18 @@ const clipsSlice = createSlice({
 		updatePeriod(state, action) {
 			const { from, newPeriod } = action.payload;
 			state[from].currentPeriod = newPeriod;
+		},
+		increaseRowCount(state, action) {
+			const { from, period, newRowCount  } = action.payload;
+			state[from][period].rowCount = newRowCount;
 		}
 	}
 });
 
-const { getTopClips_Start, getTopClips_Success, getTopClips_Failure } = clipsSlice.actions;
-
 export const updatePeriod = clipsSlice.actions.updatePeriod;
+export const increaseRowCount = clipsSlice.actions.increaseRowCount;
 
+const { getTopClips_Start, getTopClips_Success, getTopClips_Failure } = clipsSlice.actions;
 export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => async (dispatch) => {
 	try {
 		dispatch(getTopClips_Start({ from, period }));

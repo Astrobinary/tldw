@@ -1,0 +1,92 @@
+import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faShareAlt, faFilmAlt, faDownload } from '@fortawesome/pro-light-svg-icons';
+
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+import './VideoPlayer.scss';
+import { faEye } from '@fortawesome/pro-duotone-svg-icons';
+
+dayjs.extend(relativeTime);
+
+export const VideoPlayer = (props) => {
+	const video = props.video;
+	const videoRef = useRef(null);
+
+	const handleDimensions = () => {
+		const width = videoRef.current.getBoundingClientRect().width;
+		let height = width * 9;
+		height /= 16;
+
+		videoRef.current.style.height = `${height}px`;
+	};
+
+	const getMp4 = () => {};
+
+	useEffect(() => {
+		window.addEventListener('resize', handleDimensions);
+		handleDimensions();
+		return () => {
+			window.removeEventListener('resize', handleDimensions);
+		};
+	}, []);
+
+	return (
+		<div className='VideoPlayer'>
+			<div style={{ backgroundImage: `url(${video.thumbnails.medium})`, backgroundColor: 'black', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover', zIndex: '100' }} ref={videoRef}>
+				<iframe allowFullScreen src={video.embed_url} frameBorder='0' title={video.title} scrolling='no' height='100%' width='100%' />
+			</div>
+
+			<div className='video-info'>
+				<img className='streamer-logo' alt='avatar' src={video.broadcaster.logo} />
+
+				<div className='video-text'>
+					<div className='video-title' title={video.title}>
+						{video.title}
+					</div>
+					<div className='streamer-info'>
+						<div className='streamer-name'>
+							<Link to={'/streamers/' + video.broadcaster.name}>{video.broadcaster.display_name}</Link>
+						</div>
+						<div className='from-text'>&nbsp;from&nbsp;</div>
+						<div className='streamer-game'>
+							<Link to={'/games/' + video.game}>{video.game}</Link>
+						</div>
+						<div className='video-date'>&nbsp;{dayjs(video.created_at).fromNow()}</div>
+					</div>
+					<div className='video-views'>
+						<FontAwesomeIcon className='icon' alt={'view count'} icon={faEye} /> <span>{video.views.toLocaleString()}</span>
+					</div>
+				</div>
+
+				<div className='video-interact'>
+					<div className='interact-icon' title='favorite'>
+						<FontAwesomeIcon className='icon' alt={'favorite'} icon={faHeart} />
+					</div>
+					<div className='interact-icon' title='share'>
+						<FontAwesomeIcon className='icon' alt={'share'} icon={faShareAlt} />
+					</div>
+
+					{video.vod ? (
+						<div className='interact-icon' title='vod'>
+							<a href={video.vod.url} target='_blank' rel='noopener noreferrer'>
+								<FontAwesomeIcon className='icon' alt={'vod'} icon={faFilmAlt} />
+							</a>
+						</div>
+					) : null}
+
+					<div className='interact-icon' title='download'>
+						<a href={getMp4()} download target='_blank' rel='noopener noreferrer'>
+							<FontAwesomeIcon className='icon' alt={'download'} icon={faDownload} />
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default VideoPlayer;

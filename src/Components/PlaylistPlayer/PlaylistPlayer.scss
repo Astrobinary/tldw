@@ -1,0 +1,60 @@
+.PlaylistPlayer {
+	pointer-events: none;
+	z-index: -1;
+	.side-options {
+		display: flex;
+		justify-content: space-around;
+		margin-top: -20%;
+		pointer-events: none;
+	}
+
+	.option {
+		display: flex;
+		flex-direction: column;
+		pointer-events: auto;
+		width: 480px;
+		height: 272px;
+		z-index: -1;
+		opacity: 0.5;
+		transition: all 0.3s ease;
+		text-align: center;
+		color: white;
+        font-weight: 400;
+        font-size: 14px;
+		letter-spacing: 1px;
+		&:hover {
+			opacity: 0.8;
+			cursor: pointer;
+		}
+	}
+
+	.prev-video {
+        margin-right: 30%;
+        .icon{
+            font-size: 64px;
+            left: 2%;
+            margin-left: -13%;
+            margin-top: 40%;
+            margin-bottom: -35%;
+            opacity: 0.5;
+          
+        }
+		.prev-text {
+            margin-right: 30%;
+            padding-top: 5px;
+		}
+	}
+	.next-video {
+        .icon{
+            font-size: 64px;
+            margin-top: 40%;
+            margin-bottom: -35%;
+            margin-left: 102%;
+            opacity: 0.8;
+        }
+		.next-text {
+            margin-left: 30%;
+            padding-top: 5px;
+		}
+	}
+}

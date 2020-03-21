@@ -1,3 +1,4 @@
+@import "../../variables.scss";
 .VideoSection {
 	display: flex;
 	flex-direction: row;
@@ -5,4 +6,27 @@
 	justify-content: space-evenly;
 	margin-top: 20px;
 	transition: height 1s ease-in-out;
+	pointer-events:auto;
+}
+
+.view-more-btn{
+	color: rgba(255, 255, 255, 0.4);
+    float: right;
+    letter-spacing: 3px;
+    margin-top: 20px;
+    opacity: 0.8;
+    font-size: 13px;
+    padding-bottom: 5px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.5);
+        color: rgba(255, 255, 255, 1);
+        cursor: pointer;
+        border-bottom: 1px solid $pink;
+    }
 }

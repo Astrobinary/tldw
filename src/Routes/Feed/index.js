@@ -7,25 +7,22 @@ import VideoSection from '../../Components/VideoSection';
 export const Feed = () => {
 	const feed = useSelector((state) => state.feed);
 	const dispatch = useDispatch();
-	const clipLength = feed.mostViewed[feed.mostViewed.currentPeriod].clips.length;
+	const clipLength = feed.views[feed.views.currentPeriod].clips.length;
 
 	useEffect(() => {
 		if (clipLength === 0) {
-			dispatch(fetchTopClips({ from: 'mostViewed', period: feed.mostViewed.currentPeriod }));
+			dispatch(fetchTopClips({ from: 'views', period: feed.views.currentPeriod }));
 		}
-	}, [feed.mostViewed.currentPeriod, dispatch, clipLength]);
+	}, [feed.views.currentPeriod, dispatch, clipLength]);
 
 	// const checkState = () => {
-	// 	dispatch(fetchTopClips({ from: 'mostViewed', period: topClips[topClips.currentPeriod], _cursor: topClips.mostViewed[topClips.mostViewed.currentPeriod].cursor }));
+	// 	dispatch(fetchTopClips({ from: 'views', period: topClips[topClips.currentPeriod], _cursor: topClips.views[topClips.views.currentPeriod].cursor }));
 	// };
 
 	return (
 		<section className='Feed'>
-			<SectionHeader from='mostViewed' titleText='most viewed' />
-			<VideoSection from='mostViewed' {...feed.mostViewed} />
-
-			{/* <button onClick={() => dispatch(fetchTopClips({ from: 'mostViewed', _cursor: topClips.mostViewed.day.cursor }))}>Fetch More Clips for Today</button>
-			<button onClick={() => checkState()}>Whats the state</button> */}
+			<SectionHeader from='views' titleText='most viewed' />
+			<VideoSection from='views' {...feed.views} btntext="keep them coming"/>
 		</section>
 	);
 };
