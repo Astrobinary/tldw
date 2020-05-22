@@ -12,7 +12,7 @@ import { faEye } from '@fortawesome/pro-duotone-svg-icons';
 
 dayjs.extend(relativeTime);
 
-export const VideoPlayer = (props) => {
+export const VideoPlayer = React.forwardRef((props, ref) => {
 	const video = props.video;
 	const videoRef = useRef(null);
 
@@ -28,16 +28,18 @@ export const VideoPlayer = (props) => {
 
 	useEffect(() => {
 		window.addEventListener('resize', handleDimensions);
-		handleDimensions();
+		if (video) handleDimensions();
 		return () => {
 			window.removeEventListener('resize', handleDimensions);
 		};
-	}, []);
+	}, [video]);
+
+	if (!video) return <div>Fetching..</div>;
 
 	return (
 		<div className='VideoPlayer'>
 			<div style={{ backgroundImage: `url(${video.thumbnails.medium})`, backgroundColor: 'black', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover', zIndex: '100' }} ref={videoRef}>
-				<iframe allowFullScreen src={video.embed_url} frameBorder='0' title={video.title} scrolling='no' height='100%' width='100%' />
+				<iframe allowFullScreen src={video.embed_url} frameBorder='0' title={video.title} scrolling='no' height='100%' width='100%' ref={ref} />
 			</div>
 
 			<div className='video-info'>
@@ -87,6 +89,6 @@ export const VideoPlayer = (props) => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default VideoPlayer;

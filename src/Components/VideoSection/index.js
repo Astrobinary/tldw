@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { increaseRowCount } from '../../Redux/feedReducer';
+import { increaseRowCount } from '../../Redux/clipsReducer';
 import PropTypes from 'prop-types';
 import './VideoSection.scss';
 
@@ -23,7 +23,7 @@ const VideoSection = (props) => {
 		return () => {
 			window.removeEventListener('resize', handleDimensions);
 		};
-	}, [location]);
+	}, [location, videoSectionRef]);
 
 	//TODO Have a better loading spinner
 	if (collection.isFetching) return <span className='VideoSection'>Fetching data...</span>;
@@ -62,20 +62,21 @@ const VideoSection = (props) => {
 	};
 
 	return (
-		<section className='VideoSection' ref={videoSectionRef}>
-			{renderThumbnails()}
+		<React.Fragment>
+			<section className='VideoSection' ref={videoSectionRef}>
+				{renderThumbnails()}
+			</section>
 			<div className='view-more-btn' onClick={handleViewMore}>
 				{props.btntext}
 			</div>
-			{/* {this.props.rowCount < maxRows ? <ViewMoreBtn btnText={this.props.btnText} fetch={() => this.props.showMoreVideos(this.props.from, this.selectRef)} rowCount={this.props.rowCount} /> : this.fetchMoreVideos()} */}
-		</section>
+		</React.Fragment>
 	);
 };
 
 VideoSection.propTypes = {
 	currentPeriod: PropTypes.string.isRequired,
 	from: PropTypes.string.isRequired,
-	btntext: PropTypes.string.isRequired
+	btntext: PropTypes.string.isRequired,
 };
 
 export default VideoSection;

@@ -16,7 +16,6 @@ import Redirecting from './Components/Redirecting';
 //Routes
 import { Feed } from './Routes/Feed';
 
-
 let Index = () => (
 	<React.StrictMode>
 		<Provider store={configureStore}>
@@ -28,7 +27,7 @@ let Index = () => (
 					<Route exact path='/feed/playlist/:slug' component={PlaylistPlayer} />
 					<Redirect from='/feed/:err' to='/feed' />
 					<Redirect from='/feed/:from/:err' exact to='/feed' />
-					<Route component={SinglePlayer} />
+					<Route from='/single/:slug' component={SinglePlayer} />
 					<Route exact path='/redirecting' component={Redirecting} />
 				</Switch>
 			</Router>

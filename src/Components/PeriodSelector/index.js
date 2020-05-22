@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { updatePeriod } from '../../Redux/feedReducer';
+import { updatePeriod } from '../../Redux/clipsReducer';
 import './PeriodSelector.scss';
 
 export const PeriodSelector = (props) => {
@@ -9,7 +9,7 @@ export const PeriodSelector = (props) => {
 		{ id: 0, text: 'today', key: 'day' },
 		{ id: 1, text: 'this week', key: 'week' },
 		{ id: 2, text: 'this month', key: 'month' },
-		{ id: 3, text: 'of all time', key: 'all' }
+		{ id: 3, text: 'of all time', key: 'all' },
 	];
 
 	const [showMenu, setShowMenu] = useState(false);
@@ -44,7 +44,7 @@ export const PeriodSelector = (props) => {
 
 PeriodSelector.propTypes = {
 	from: PropTypes.string.isRequired,
-	titleText: PropTypes.string.isRequired
+	titleText: PropTypes.string.isRequired,
 };
 
 export default PeriodSelector;

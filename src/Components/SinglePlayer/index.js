@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import './PlaylistPlayer.scss';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchSingleClip } from '../../Redux/clipsReducer';
+import './SinglePlayer.scss';
+
 import VideoPlayer from '../VideoPlayer';
 
 export const SinglePlayer = (props) => {
-	const location = useLocation();
-	const history = useHistory();
+	const slug = props.location.pathname.split('/')[2];
+	const clip = useSelector((state) => state.single.clip);
+	const dispatch = useDispatch();
 
-	const query = new URLSearchParams(location.search);
-	const slug = query.get('slug');
-	const period = query.get('period');
-	const route = location.pathname.split('/')[1];
-	const from = location.pathname.split('/')[2];
-	const [index, setIndex] = useState(location.hash.substring(1));
-	const feed = useSelector((state) => state[route]);
+	useEffect(() => {
+		if (!clip) dispatch(fetchSingleClip(slug));
 
-	let clips;
-
-	
+		console.log('how many');
+	}, [slug, dispatch, clip]);
 
 	return (
 		<div className='SinglePlayer'>
-			This is the single player
+			<VideoPlayer video={clip} />
 		</div>
 	);
 };

@@ -17,3 +17,15 @@ export async function getTopClips(period, language, cursor) {
 		throw err;
 	}
 }
+
+export async function getSingleClip(slug) {
+	const url = `${api}/clips/${slug}`;
+
+	try {
+		const clip = await axios.get(url, options);
+		return clip.data;
+	} catch (err) {
+		console.log(err);
+		throw err;
+	}
+}

@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTopClips } from '../Api/twitchAPI';
+import { getTopClips, getSingleClip } from '../Api/twitchAPI';
 
 const initialData = {
 	clips: [],
 	cursor: '',
 	isFetching: false,
 	error: false,
-	rowCount: 2
+	rowCount: 2,
 };
 
 const initialTimes = {
@@ -14,16 +14,16 @@ const initialTimes = {
 	week: initialData,
 	month: initialData,
 	all: initialData,
-	currentPeriod: 'day'
+	currentPeriod: 'day',
 };
 
 const initialState = {
 	sponsored: initialTimes,
 	views: initialTimes,
-	drama: initialTimes
+	drama: initialTimes,
 };
 
-const clipsSlice = createSlice({
+export const feedSlice = createSlice({
 	name: 'feed',
 	initialState: initialState,
 	reducers: {
@@ -48,16 +48,16 @@ const clipsSlice = createSlice({
 			state[from].currentPeriod = newPeriod;
 		},
 		increaseRowCount(state, action) {
-			const { from, period, newRowCount  } = action.payload;
+			const { from, period, newRowCount } = action.payload;
 			state[from][period].rowCount = newRowCount;
-		}
-	}
+		},
+	},
 });
 
-export const updatePeriod = clipsSlice.actions.updatePeriod;
-export const increaseRowCount = clipsSlice.actions.increaseRowCount;
+export const updatePeriod = feedSlice.actions.updatePeriod;
+export const increaseRowCount = feedSlice.actions.increaseRowCount;
 
-const { getTopClips_Start, getTopClips_Success, getTopClips_Failure } = clipsSlice.actions;
+const { getTopClips_Start, getTopClips_Success, getTopClips_Failure } = feedSlice.actions;
 export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => async (dispatch) => {
 	try {
 		dispatch(getTopClips_Start({ from, period }));
@@ -68,4 +68,31 @@ export const fetchTopClips = ({ from, period = 'day', language, _cursor }) => as
 	}
 };
 
-export default clipsSlice.reducer;
+// ---------------------------------------- //
+
+export const singleClipSlice = createSlice({
+	name: 'single',
+	initialState: { clip: null, isFetching: false, error: false },
+	reducers: {
+		getSingleClips_Start(state, action) {
+			state.isFetching = true;
+		},
+		getSingleClips_Success(state, action) {
+			state.clip = action.payload;
+			state.isFetching = false;
+		},
+		getSingleClips_Failure(state, action) {
+			state.error = action.payload.error;
+		},
+	},
+});
+
+export const fetchSingleClip = (slug) => async (dispatch) => {
+	try {
+		dispatch(singleClipSlice.actions.getSingleClips_Start());
+		const clip = await getSingleClip(slug);
+		dispatch(singleClipSlice.actions.getSingleClips_Success(clip));
+	} catch (err) {
+		dispatch(singleClipSlice.actions.getSingleClips_Failure({ error: err.toString() }));
+	}
+};

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTopClips } from '../../Redux/feedReducer';
+import { fetchTopClips } from '../../Redux/clipsReducer';
 import SectionHeader from '../../Components/PeriodSelector';
 import VideoSection from '../../Components/VideoSection';
 
@@ -22,7 +22,7 @@ export const Feed = () => {
 	return (
 		<section className='Feed'>
 			<SectionHeader from='views' titleText='most viewed' />
-			<VideoSection from='views' {...feed.views} btntext="keep them coming"/>
+			<VideoSection from='views' {...feed.views} btntext='keep them coming' />
 		</section>
 	);
 };
