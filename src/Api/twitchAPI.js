@@ -29,3 +29,35 @@ export async function getSingleClip(slug) {
 		throw err;
 	}
 }
+
+export async function getChatReplay(vodID, offset, duration) {
+	const url = `${api}/videos/${vodID}/comments?content_offset_seconds=${offset}`;
+	let comments = [];
+
+	try {
+		let replay = await axios.get(url, options);
+		comments.push(...replay.data.comments);
+
+		while (replay.data.comments[replay.data.comments.length - 1]['content_offset_seconds'] < offset + duration && replay.data['_next']) {
+			comments.push(...replay.data.comments);
+			replay = await axios.get(url + '&cursor=' + replay.data['_next'], options);
+		}
+		return comments;
+	} catch (err) {
+		console.log(err);
+		throw err;
+	}
+}
+
+export async function getOnlineStreamers() {
+	const url = `${api}/streams?limit=100`;
+
+	try {
+		const streamers = await axios.get(url, options);
+		console.log(streamers);
+		return { streamers: streamers.data.streamers, amount: streamers.data.count };
+	} catch (err) {
+		console.log(err);
+		throw err;
+	}
+}

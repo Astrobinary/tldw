@@ -16,6 +16,8 @@ export const PeriodSelector = (props) => {
 	const dispatch = useDispatch();
 	const periods = useSelector((state) => state.feed[props.from]);
 
+	if (props.hideDate) return <div className='PeriodSelector'>{props.titleText}</div>;
+
 	const key = periods.currentPeriod;
 	const current = periodEnum.filter((obj) => obj.key === key);
 	const periodText = current[0].text;

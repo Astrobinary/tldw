@@ -9,7 +9,6 @@
 }
 
 .view-more-btn {
-	color: rgba(255, 255, 255, 0.4);
 	float: right;
 	letter-spacing: 3px;
 	margin-top: 20px;
@@ -17,15 +16,22 @@
 	font-size: 13px;
 	padding-bottom: 5px;
 	text-align: center;
-	background: rgba(0, 0, 0, 0.3);
-	padding: 5px 15px;
-	transition: all 0.3s ease;
-	border-bottom: 1px solid rgba(0, 0, 0, 0);
-	pointer-events: auto;
-	&:hover {
-		background: rgba(0, 0, 0, 0.5);
-		color: rgba(255, 255, 255, 1);
-		cursor: pointer;
-		border-bottom: 1px solid $pink;
+	width: 100%;
+
+	div {
+		transition: all 0.3s ease;
+		text-align: center;
+		float: right;
+		padding: 5px 15px;
+		white-space: nowrap;
+		background: rgba(0, 0, 0, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0);
+		color: rgba(255, 255, 255, 0.4);
+		&:hover {
+			cursor: pointer;
+			background: rgba(0, 0, 0, 0.5);
+			color: rgba(255, 255, 255, 1);
+			border-bottom: 1px solid $pink;
+		}
 	}
 }

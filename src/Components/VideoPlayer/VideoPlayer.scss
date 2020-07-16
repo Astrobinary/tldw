@@ -17,11 +17,17 @@
 		background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%, rgba(0, 0, 0, 1) 100%);
 
 		.streamer-logo {
-			margin-top: 10px;
+			margin-top: 8px;
 			margin-left: 10px;
 			width: 65px;
 			height: 65px;
 			border-radius: 65px;
+			border: 2px solid rgba(0, 0, 0, 0);
+			transition: all 0.3s ease;
+			&:hover {
+				cursor: pointer;
+				border: 2px solid #ed4f74;
+			}
 		}
 
 		.video-text {
@@ -34,17 +40,20 @@
 			justify-content: center;
 			margin-top: -5px;
 			flex: 5 1;
+			justify-content: space-evenly;
+			padding: 15px 0px;
 
 			.streamer-info {
 				display: flex;
 				flex-direction: row;
-				color: rgba(255, 255, 255, 0.5);
+				color: rgba(255, 255, 255, 0.4);
 				letter-spacing: 2px;
 				font-size: 12px;
 				transition: all 0.3s ease;
 				.streamer-name {
 					transition: all 0.3s ease;
 					border-bottom: 1px solid rgba(255, 255, 255, 0);
+					color: rgba(255, 255, 255, 0.6);
 					&:hover {
 						cursor: pointer;
 						color: rgba(255, 255, 255, 0.8);
@@ -56,7 +65,7 @@
 				.streamer-game {
 					transition: all 0.3s ease;
 					border-bottom: 1px solid rgba(255, 255, 255, 0);
-					
+					color: rgba(255, 255, 255, 0.6);
 					&:hover {
 						cursor: pointer;
 						color: rgba(255, 255, 255, 0.8);
@@ -66,13 +75,26 @@
 				}
 			}
 
-			.video-views{
+			.video-views {
 				font-size: 13px;
-				margin-top: 0px;
-				color: rgba(255, 255, 255, 0.5);
+				margin-top: -1px;
+				color: rgba(255, 255, 255, 0.4);
 				letter-spacing: 2px;
-				span{
-					font-size: 12px;
+
+				.clipby {
+					font-size: 11px;
+					padding-left: 5px;
+					display: inline-block;
+					letter-spacing: 2px;
+					line-height: 2px;
+					margin-bottom: 2px;
+
+					&:hover {
+						cursor: help;
+					}
+				}
+				span {
+					font-size: 11px;
 				}
 			}
 		}
@@ -96,7 +118,6 @@
 					opacity: 1;
 					border-bottom: 1px solid #ed4f74;
 				}
-
 			}
 		}
 	}

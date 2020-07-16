@@ -23,6 +23,8 @@ export const Feed = () => {
 		<section className='Feed'>
 			<SectionHeader from='views' titleText='most viewed' />
 			<VideoSection from='views' {...feed.views} btntext='keep them coming' />
+			<SectionHeader from='views' titleText='top followed from' />
+			<VideoSection from='views' btntext='keep them coming' />
 		</section>
 	);
 };

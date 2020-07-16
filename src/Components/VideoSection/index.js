@@ -7,6 +7,9 @@ import './VideoSection.scss';
 
 import Thumbnail from '../Thumbnail';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpaceStationMoonAlt } from '@fortawesome/pro-duotone-svg-icons';
+
 const VideoSection = (props) => {
 	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 304));
 	const dispatch = useDispatch();
@@ -15,7 +18,7 @@ const VideoSection = (props) => {
 	const collection = props[props.currentPeriod];
 
 	const handleDimensions = () => {
-		setPerRow(Math.floor(videoSectionRef.current.clientWidth / 304));
+		if (videoSectionRef.current) setPerRow(Math.floor(videoSectionRef.current.clientWidth / 304));
 	};
 
 	useEffect(() => {
@@ -24,6 +27,13 @@ const VideoSection = (props) => {
 			window.removeEventListener('resize', handleDimensions);
 		};
 	}, [location, videoSectionRef]);
+
+	if (!collection)
+		return (
+			<div className='VideoSection'>
+				<FontAwesomeIcon className='icon' alt={'view count'} icon={faSpaceStationMoonAlt} />
+			</div>
+		);
 
 	//TODO Have a better loading spinner
 	if (collection.isFetching) return <span className='VideoSection'>Fetching data...</span>;
@@ -65,10 +75,10 @@ const VideoSection = (props) => {
 		<React.Fragment>
 			<section className='VideoSection' ref={videoSectionRef}>
 				{renderThumbnails()}
+				<div className='view-more-btn' onClick={handleViewMore}>
+					<div>{props.btntext}</div>
+				</div>
 			</section>
-			<div className='view-more-btn' onClick={handleViewMore}>
-				{props.btntext}
-			</div>
 		</React.Fragment>
 	);
 };
