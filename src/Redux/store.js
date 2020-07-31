@@ -1,20 +1,21 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
 //Reducers
 import { feedSlice, singleClipSlice } from './clipsReducer';
+import { streamersSlice } from './streamersReducer';
 import { chatReplaySlice } from './chatReducer';
+import { gamesSlice } from './gamesReducer';
 
 const reducer = {
 	feed: feedSlice.reducer,
+	streamers: streamersSlice.reducer,
+	games: gamesSlice.reducer,
 	single: singleClipSlice.reducer,
 	chatReplay: chatReplaySlice.reducer,
 };
 
-const middleware = [...getDefaultMiddleware()];
-
 const store = configureStore({
 	reducer,
-	middleware,
 	devTools: process.env.NODE_ENV !== 'production',
 });
 

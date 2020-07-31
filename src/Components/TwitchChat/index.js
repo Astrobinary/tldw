@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShieldAlt, faStars, faSeedling, faCog } from '@fortawesome/pro-duotone-svg-icons';
+import { faShieldAlt, faStars, faSeedling, faFontCase, faGhost, faEyeSlash } from '@fortawesome/pro-duotone-svg-icons';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
@@ -19,9 +19,10 @@ const TwitchChat = (props) => {
 	const dispatch = useDispatch();
 	const chatReplay = useSelector((state) => state.chatReplay);
 	const scrollableNodeRef = React.createRef();
+	const chatScrollRef = useRef(null);
 
 	useEffect(() => {
-		if (props.vod) {
+		if (props.vod !== null) {
 			if (chatReplay.chats[slug] === undefined) {
 				dispatch(fetchChatReplay(slug, props.vod.id, props.vod.offset, props.duration));
 			}
@@ -94,6 +95,8 @@ const TwitchChat = (props) => {
 			var tl = gsap.timeline();
 			const timeInBetween = props.duration / chatReplay.chats[slug].length;
 			chatReplay.chats[slug].forEach((comment, index) => {
+				chatScrollRef.current.recalculate();
+
 				tl.to(`#c${comment['_id']}`, {
 					duration: timeInBetween,
 					display: 'block',
@@ -109,11 +112,21 @@ const TwitchChat = (props) => {
 
 	return (
 		<div className='TwitchChat'>
-			<SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} className='chat-container' id='simplebar' style={{ maxHeight: props.videoRef.current ? props.videoRef.current.clientHeight + 5 : 100 }}>
+			<SimpleBar ref={chatScrollRef} scrollableNodeProps={{ ref: scrollableNodeRef }} className='chat-container' id='simplebar' style={{ maxHeight: props.videoRef.current ? props.videoRef.current.clientHeight + 5 : 100 }}>
 				{renderChat()}
 			</SimpleBar>
 			<div className='chat-settings'>
-				chat settings <FontAwesomeIcon className='icon' alt={'chat settings'} icon={faCog} />
+				<div className='font-setting'>
+					<FontAwesomeIcon className='icon' alt={'size'} title='font size' icon={faFontCase} />
+				</div>
+
+				<div className='opacity-setting'>
+					<FontAwesomeIcon className='icon' alt={'opacity'} title='opacity' icon={faGhost} />
+				</div>
+
+				<div className='opacity-setting'>
+					<FontAwesomeIcon className='icon' alt={'disable'} title='disable' icon={faEyeSlash} />
+				</div>
 			</div>
 		</div>
 	);

@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updatePeriod } from '../../Redux/clipsReducer';
 import './PeriodSelector.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStream } from '@fortawesome/pro-duotone-svg-icons';
+
 export const PeriodSelector = (props) => {
 	const periodEnum = [
 		{ id: 0, text: 'today', key: 'day' },
@@ -34,12 +37,14 @@ export const PeriodSelector = (props) => {
 	));
 
 	return (
-		<div className='PeriodSelector'>
+		<div className='PeriodSelector' onClick={() => setShowMenu(!showMenu)}>
 			{props.titleText}
-			<span className='current-item' onClick={() => setShowMenu(!showMenu)}>
-				{periodText}
-			</span>
+			<span className='current-item'>{periodText}</span>
+
 			{showMenu && menu}
+			<span>
+				<FontAwesomeIcon className='icon' alt={'time selector'} icon={faStream} title='select time frame' />
+			</span>
 		</div>
 	);
 };

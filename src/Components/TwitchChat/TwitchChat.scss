@@ -65,5 +65,23 @@
 	.chat-settings {
 		padding-top: 20px;
 		padding-left: 20px;
+		color: white;
+		// display: flex;
+		text-align: center;
+		// justify-content: space-evenly;
+		div {
+			display: inline-block;
+			padding-right: 30px;
+			font-size: 16px;
+			opacity: 0.3;
+			transition: all 0.5s ease;
+			&:hover {
+				opacity: 0.8;
+				cursor: pointer;
+			}
+			span {
+				padding-right: 10px;
+			}
+		}
 	}
 }

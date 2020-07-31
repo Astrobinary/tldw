@@ -20,6 +20,7 @@ const initialTimes = {
 const initialState = {
 	sponsored: initialTimes,
 	views: initialTimes,
+	followed: initialTimes,
 	drama: initialTimes,
 };
 

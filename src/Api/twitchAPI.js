@@ -49,13 +49,28 @@ export async function getChatReplay(vodID, offset, duration) {
 	}
 }
 
-export async function getOnlineStreamers() {
-	const url = `${api}/streams?limit=100`;
+export async function getOnlineStreamers(offset) {
+	!offset ? (offset = '') : (offset = `&offset=${offset}`);
+
+	const url = `${api}/streams?limit=100${offset}`;
 
 	try {
-		const streamers = await axios.get(url, options);
-		console.log(streamers);
-		return { streamers: streamers.data.streamers, amount: streamers.data.count };
+		const json = await axios.get(url, options);
+		return { streams: json.data.streams, amount: json.data.streams.length };
+	} catch (err) {
+		console.log(err);
+		throw err;
+	}
+}
+
+export async function getTopGames(offset) {
+	!offset ? (offset = '') : (offset = `&offset=${offset}`);
+
+	const url = `${api}/games/top?limit=100${offset}`;
+
+	try {
+		const json = await axios.get(url, options);
+		return { games: json.data.top };
 	} catch (err) {
 		console.log(err);
 		throw err;

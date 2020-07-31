@@ -16,6 +16,7 @@ import Redirecting from './Components/Redirecting';
 //Routes
 import { Feed } from './Routes/Feed';
 import { Streamers } from './Routes/Streamers';
+import { Games } from './Routes/Games';
 
 let Index = () => (
 	<React.StrictMode>
@@ -30,6 +31,8 @@ let Index = () => (
 					<Redirect from='/feed/:from/:err' exact to='/feed' />
 
 					<Route exact path='/Streamers' component={Streamers} />
+
+					<Route exact path='/Games' component={Games} />
 
 					<Route from='/single/:slug' component={SinglePlayer} />
 					<Route exact path='/redirecting' component={Redirecting} />

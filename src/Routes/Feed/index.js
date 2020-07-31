@@ -22,9 +22,9 @@ export const Feed = () => {
 	return (
 		<section className='Feed'>
 			<SectionHeader from='views' titleText='most viewed' />
-			<VideoSection from='views' {...feed.views} btntext='keep them coming' />
-			<SectionHeader from='views' titleText='top followed from' />
-			<VideoSection from='views' btntext='keep them coming' />
+			<VideoSection from='views' {...feed.views} btntext='show me more most viewed' />
+			<SectionHeader from='followed' titleText='top followed from' />
+			<VideoSection from='followed' btntext='show more followed' />
 		</section>
 	);
 };

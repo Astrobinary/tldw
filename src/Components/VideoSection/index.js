@@ -6,9 +6,11 @@ import PropTypes from 'prop-types';
 import './VideoSection.scss';
 
 import Thumbnail from '../Thumbnail';
+import LoginMSG from '../Messages/loginMSG';
+import MissingMSG from '../Messages/missingMSG';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpaceStationMoonAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faSpaceStationMoonAlt, faAlienMonster } from '@fortawesome/pro-duotone-svg-icons';
 
 const VideoSection = (props) => {
 	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 304));
@@ -28,12 +30,9 @@ const VideoSection = (props) => {
 		};
 	}, [location, videoSectionRef]);
 
-	if (!collection)
-		return (
-			<div className='VideoSection'>
-				<FontAwesomeIcon className='icon' alt={'view count'} icon={faSpaceStationMoonAlt} />
-			</div>
-		);
+	if (!collection) return <LoginMSG />;
+
+	if (!collection) return <MissingMSG />;
 
 	//TODO Have a better loading spinner
 	if (collection.isFetching) return <span className='VideoSection'>Fetching data...</span>;
@@ -43,7 +42,6 @@ const VideoSection = (props) => {
 		const newCount = parseInt(collection.rowCount) + 2;
 
 		if (collection.rowCount < maxRows) {
-			console.log(newCount);
 			dispatch(increaseRowCount({ from: props.from, period: props.currentPeriod, newRowCount: newCount }));
 		} else {
 			console.log('we need to fetch more from twitch');
@@ -84,7 +82,7 @@ const VideoSection = (props) => {
 };
 
 VideoSection.propTypes = {
-	currentPeriod: PropTypes.string.isRequired,
+	currentPeriod: PropTypes.string,
 	from: PropTypes.string.isRequired,
 	btntext: PropTypes.string.isRequired,
 };
