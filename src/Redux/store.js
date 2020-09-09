@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 //Reducers
-import { feedSlice, singleClipSlice } from './clipsReducer';
+import { feedSlice, singleClipSlice } from './feedReducer';
 import { streamersSlice } from './streamersReducer';
 import { chatReplaySlice } from './chatReducer';
 import { gamesSlice } from './gamesReducer';

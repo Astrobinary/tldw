@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { increaseRowCount } from '../../Redux/clipsReducer';
+import { increaseRowCount } from '../../Redux/feedReducer';
 import PropTypes from 'prop-types';
 import './VideoSection.scss';
 
 import Thumbnail from '../Thumbnail';
 import LoginMSG from '../Messages/loginMSG';
 import MissingMSG from '../Messages/missingMSG';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpaceStationMoonAlt, faAlienMonster } from '@fortawesome/pro-duotone-svg-icons';
 
 const VideoSection = (props) => {
 	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 304));
@@ -35,14 +32,16 @@ const VideoSection = (props) => {
 	if (!collection) return <MissingMSG />;
 
 	//TODO Have a better loading spinner
-	if (collection.isFetching) return <span className='VideoSection'>Fetching data...</span>;
+	// if (collection.isFetching) return <span className='VideoSection'>Fetching data...</span>;
+
+	if (collection.clips.length < 1) return <MissingMSG />;
 
 	const handleViewMore = () => {
 		const maxRows = Math.floor(collection.clips.length / perRow);
 		const newCount = parseInt(collection.rowCount) + 2;
 
 		if (collection.rowCount < maxRows) {
-			dispatch(increaseRowCount({ from: props.from, period: props.currentPeriod, newRowCount: newCount }));
+			dispatch(props.more({ from: props.from, period: props.currentPeriod, newRowCount: newCount }));
 		} else {
 			console.log('we need to fetch more from twitch');
 		}

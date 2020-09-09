@@ -63,6 +63,22 @@ export async function getOnlineStreamers(offset) {
 	}
 }
 
+export async function getStreamerClips(name, period, language, cursor) {
+	!cursor ? (cursor = '') : (cursor = `&cursor=${cursor}`);
+	!language ? (language = '') : (language = `&language=${language}`);
+	!name ? (name = '') : (name = `${name}`);
+
+	const url = `${api}/clips/top?channel=${name}&limit=100&period=${period}${language}${cursor}`;
+
+	try {
+		const clips = await axios.get(url, options);
+		return { clips: clips.data.clips, cursor: clips.data._cursor };
+	} catch (err) {
+		console.log(err);
+		throw err;
+	}
+}
+
 export async function getTopGames(offset) {
 	!offset ? (offset = '') : (offset = `&offset=${offset}`);
 

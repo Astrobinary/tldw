@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { updatePeriod } from '../../Redux/clipsReducer';
+
 import './PeriodSelector.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,16 +17,22 @@ export const PeriodSelector = (props) => {
 
 	const [showMenu, setShowMenu] = useState(false);
 	const dispatch = useDispatch();
-	const periods = useSelector((state) => state.feed[props.from]);
+	const periods = useSelector((state) => state[props.route][props.from]);
 
 	if (props.hideDate) return <div className='PeriodSelector'>{props.titleText}</div>;
+	if (!periods)
+		return (
+			<div className='PeriodSelector' onClick={() => setShowMenu(!showMenu)}>
+				{props.titleText}
+			</div>
+		);
 
 	const key = periods.currentPeriod;
 	const current = periodEnum.filter((obj) => obj.key === key);
 	const periodText = current[0].text;
 
 	const updateMenu = (item) => {
-		dispatch(updatePeriod({ from: props.from, newPeriod: item.key }));
+		dispatch(props.updateFunc({ from: props.from, newPeriod: item.key }));
 		setShowMenu(false);
 	};
 

@@ -5,8 +5,8 @@ import { increaseRowCount } from '../../Redux/streamersReducer';
 import PropTypes from 'prop-types';
 import './StreamerSection.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpaceStationMoonAlt } from '@fortawesome/pro-duotone-svg-icons';
+import LoginMSG from '../Messages/loginMSG';
+import MissingMSG from '../Messages/missingMSG';
 
 const StreamerSection = (props) => {
 	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 172));
@@ -25,12 +25,7 @@ const StreamerSection = (props) => {
 		};
 	}, [location, props, streamerSectionRef]);
 
-	if (!props.data)
-		return (
-			<div className='StreamerSection'>
-				<FontAwesomeIcon className='icon' alt={'view count'} icon={faSpaceStationMoonAlt} />
-			</div>
-		);
+	if (props.data.streams.length < 1) return <MissingMSG />;
 
 	//TODO Have a better loading spinner
 	if (props.data.isFetching) return <span className='VideoSection'>Fetching data...</span>;
@@ -57,7 +52,7 @@ const StreamerSection = (props) => {
 		return (
 			<React.Fragment>
 				{props.data.streams.slice(0, perRow * props.data.rowCount).map((stream, index) => (
-					<Link className='streamer' key={stream['_id']} to={{ pathname: `${location.pathname}/${stream.channel.name}` }}>
+					<Link className='streamer' key={stream['_id']} to={{ pathname: `${location.pathname}/${stream.channel['display_name']}` }}>
 						<img src={stream.channel.logo} key={stream['_id']} alt={stream.channel['display_name']} />
 						<div className='streamer-name'>{stream.channel['display_name']}</div>
 					</Link>

@@ -5,8 +5,8 @@ import { increaseRowCount } from '../../Redux/gamesReducer';
 import PropTypes from 'prop-types';
 import './GameSection.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpaceStationMoonAlt } from '@fortawesome/pro-duotone-svg-icons';
+import LoginMSG from '../Messages/loginMSG';
+import MissingMSG from '../Messages/missingMSG';
 
 const GameSection = (props) => {
 	const [perRow, setPerRow] = useState(Math.floor(window.innerWidth / 158));
@@ -25,12 +25,7 @@ const GameSection = (props) => {
 		};
 	}, [location, props, GameSectionRef]);
 
-	if (!props.data)
-		return (
-			<div className='GameSection'>
-				<FontAwesomeIcon className='icon' alt={'view count'} icon={faSpaceStationMoonAlt} />
-			</div>
-		);
+	if (props.data.items.length < 1) return <MissingMSG />;
 
 	//TODO Have a better loading spinner
 	if (props.data.isFetching) return <span className='GameSection'>Fetching data...</span>;

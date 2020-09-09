@@ -16,6 +16,7 @@ import Redirecting from './Components/Redirecting';
 //Routes
 import { Feed } from './Routes/Feed';
 import { Streamers } from './Routes/Streamers';
+import { Streamer } from './Routes/Streamers/Streamer';
 import { Games } from './Routes/Games';
 
 let Index = () => (
@@ -30,9 +31,11 @@ let Index = () => (
 					<Redirect from='/feed/:err' to='/feed' />
 					<Redirect from='/feed/:from/:err' exact to='/feed' />
 
-					<Route exact path='/Streamers' component={Streamers} />
+					<Route exact path='/streamers' component={Streamers} />
+					<Route exact path='/streamers/:streamer' component={Streamer} />
+					<Route exact path='/streamers/:streamer/playlist/:slug' component={PlaylistPlayer} />
 
-					<Route exact path='/Games' component={Games} />
+					<Route exact path='/games' component={Games} />
 
 					<Route from='/single/:slug' component={SinglePlayer} />
 					<Route exact path='/redirecting' component={Redirecting} />

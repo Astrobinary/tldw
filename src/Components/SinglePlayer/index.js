@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchSingleClip } from '../../Redux/clipsReducer';
+import { fetchSingleClip } from '../../Redux/feedReducer';
 import './SinglePlayer.scss';
 
 import VideoPlayer from '../VideoPlayer';
@@ -35,7 +35,6 @@ export const SinglePlayer = (props) => {
 	return (
 		<div className='SinglePlayer'>
 			<VideoPlayer video={clip} ref={singleVideoPlayerRef} />
-
 			{clip ? <TwitchChat vod={clip.vod} duration={clip.duration} videoRef={singleVideoPlayerRef} /> : null}
 		</div>
 	);

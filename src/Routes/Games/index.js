@@ -16,10 +16,10 @@ export const Games = () => {
 
 	return (
 		<section className='Games'>
-			<SectionHeader from='top' titleText='popular games' hideDate />
+			<SectionHeader from='top' titleText='popular games' hideDate route='games' />
 			<GameSection from='top' data={games.top} btntext='view more games' />
 
-			<SectionHeader from='followed' titleText='followed games' hideDate />
+			<SectionHeader from='followed' titleText='followed games' hideDate route='games' />
 			<GameSection from='followed' data={games.followed} />
 		</section>
 	);

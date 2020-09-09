@@ -1,7 +1,8 @@
 import React from 'react';
+import './Messages.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpaceStationMoonAlt, faAlienMonster } from '@fortawesome/pro-duotone-svg-icons';
+import { faSpaceStationMoonAlt } from '@fortawesome/pro-duotone-svg-icons';
 
 export const loginMSG = (props) => {
 	return (
